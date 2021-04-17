@@ -6,6 +6,7 @@ sudo -k
 
 scripts_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 home=$HOME
+user=$USER
 
 sudo -v
 echo -e

@@ -7,6 +7,7 @@ sudo -k
 scripts_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 backups_path=$scripts_path/backups
 home=$HOME
+user=$USER
 
 sudo -v
 echo -e
@@ -51,7 +52,7 @@ copiar_revisando_origen_y_destino() {
 echo -e "iniciando respaldo de configuraciones personalizadas"
 
 echo -e
-echo -e "respaldando configuraciones de widgets del sistema"
+echo -e "respaldando configuraciones de indicador del sistema"
 ruta_backup_widgets=$backups_path/widgets
 ruta_origen_widgets=$home/.indicator-sysmonitor.json
 copiar_revisando_origen_y_destino $ruta_origen_widgets $ruta_backup_widgets

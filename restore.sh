@@ -7,64 +7,90 @@ sudo -k
 scripts_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 backups_path=$scripts_path/backups
 home=$HOME
+user=$USER
 
 sudo -v
 echo -e
 
-echo -e "Iniciando restauración de configuraciones personalizadas"
+sustituir_revisando_origen_y_destino() {
+    ruta_origen=$1
+    ruta_destino=$2
+    if test -f $ruta_origen; then
+        echo "la ruta $ruta_origen es de un archivo"
+    elif test -d $ruta_origen; then
+        echo "la ruta $ruta_origen es de un directorio"
+    else
+        echo "la ruta de origen $ruta_origen no existe"
+    fi
+}
+
+echo -e "iniciando restauración de configuraciones personalizadas"
+
 echo -e
+echo -e "restaurando configuraciones de indicador del sistema"
+ruta_backup_widgets=$backups_path/widgets
+ruta_origen_widgets=$home/.indicator-sysmonitor.json
+sustituir_revisando_origen_y_destino $ruta_backup_widgets $ruta_origen_widgets
 
-echo -e "Restaurando configuraciones de indicador del sistema"
-sudo cp -f $backups_path/widgets/.indicator-sysmonitor.json $home/
+echo -e
+echo -e "restaurando configuraciones de fuentes personalizadas"
+ruta_backup_fuentes=$backups_path/fuentes
+ruta_origen_fuentes=$home/.fonts
+sustituir_revisando_origen_y_destino $ruta_backup_fuentes $ruta_origen_fuentes
 
-echo -e "Restaurando configuraciones de fuentes personalizadas"
-if test -d $home/.fonts; then
-    echo "El directorio de fuentes ya existe, no hace falta hacer más cambios"
-else
-    echo "El directorio de fuentes no existe, creando directorio de fuentes"
-    mkdir $home/.fonts
-    echo "Directorio de fuentes creado"
-fi
-unzip -oq $home$backups_path/custom_fonts.zip -d $home/.fonts
+echo -e
+echo -e "restaurando configuraciones de terminal"
+ruta_terminal=$backups_path/terminal
+archivo_terminal=$ruta_terminal/gnome-terminal.dconf
+dconf load /org/gnome/terminal/legacy/profiles:/ <$archivo_terminal
 
-echo -e "Restaurando configuraciones de terminal"
-dconf load /org/gnome/terminal/legacy/profiles:/ <$home$backups_path/terminals/gnome-terminal.dconf
-
-echo -e "Restaurando configuraciones de tilix"
-dconf load /com/gexperts/Tilix/ <$home$backups_path/terminals/tilix.dconf
+echo -e
+echo -e "restaurando configuraciones de tilix"
+ruta_tilix=$backups_path/tilix
+archivo_tilix=$ruta_tilix/tilix.dconf
+dconf load /com/gexperts/Tilix/ <$archivo_tilix
 sudo update-alternatives --set x-terminal-emulator /usr/bin/tilix.wrapper
 
-echo -e "Restaurando configuraciones de snap"
-sudo find $home$backups_path/snap_configs/ -type f -exec chmod 777 {} \;
-sudo cp -r $home$backups_path/snap_configs/* /var/lib/snapd/desktop/applications
-
-echo -e "Restaurando configuraciones de zsh y p10k"
-sudo cp $home$backups_path/terminals/.p10k.zsh $home
-sudo cp $home$backups_path/terminals/.zshrc $home
-sudo usermod --shell $(which zsh) $user >/dev/null
-
-echo -e "Restaurando configuraciones de numix"
-gsettings set org.gnome.desktop.interface icon-theme 'Numix-Circle'
-
-echo -e "Restaurando configuraciones de docker-engine"
-if grep -q docker /etc/group; then
-    echo "El grupo docker ya existe, no hace falta hacer más cambios"
-else
-    echo "El grupo docker no existe, creando grupo docker"
-    sudo addgroup --system docker
-    echo "Grupo docker creado"
-fi
-if getent group docker | grep -q "\b$user\b"; then
-    echo "El usuario $user ya pertenece al grupo docker, no hace falta hacer más cambios"
-else
-    echo "El usuario $user no pertenece aún al grupo docker, agregando $user al grupo docker"
-    sudo adduser $user docker
-    echo "Usuario $user agregado $user al grupo docker"
-fi
-
-echo -e "Respaldando configuraciones de vlc"
-sudo cp $home$backups_path/vlc/eDark\ Vlc.vlt $home/snap/vlc/
+echo -e
+echo -e "restaurando configuraciones de snap"
+ruta_backup_snap=$backups_path/snap
+ruta_origen_snap=/var/lib/snapd/desktop/applications/
+sustituir_revisando_origen_y_destino $ruta_backup_snap $ruta_origen_snap
+sudo find $ruta_origen_snap -type f -exec chmod 755 {} \;
 
 echo -e
-echo -e "Restauraciones de configuraciones personalizadas finalizadas"
+echo -e "restaurando configuraciones de zsh y p10k"
+ruta_backup_zsh=$backups_path/zsh
+rute_origen_zsh_1=$home/.p10k.zsh
+rute_origen_zsh_2=$home/.zshrc
+sustituir_revisando_origen_y_destino $ruta_backup_zsh $rute_origen_zsh_1
+sustituir_revisando_origen_y_destino $ruta_backup_zsh $rute_origen_zsh_2
+
+echo -e
+echo -e "restaurando configuraciones de vlc"
+ruta_backup_vlc=$backups_path/vlc
+ruta_origen_vlc=$home/snap/vlc/eDark_Vlc.vlt
+sustituir_revisando_origen_y_destino $ruta_backup_vlc $ruta_origen_vlc
+
+echo -e
+echo -e "restaurando configuraciones de numix"
+gsettings set org.gnome.desktop.interface icon-theme 'Numix-Circle'
+
+echo -e
+echo -e "restaurando configuraciones de docker-engine"
+if grep -q docker /etc/group; then
+    echo "el grupo docker ya existe, no hace falta hacer más cambios"
+else
+    echo "el grupo docker no existe, creando grupo docker"
+    sudo addgroup --system docker
+fi
+if getent group docker | grep -q "\b$user\b"; then
+    echo "el usuario $user ya pertenece al grupo docker, no hace falta hacer más cambios"
+else
+    echo "el usuario $user no pertenece aún al grupo docker, agregando $user al grupo docker"
+    sudo adduser $user docker
+fi
+
+echo -e
+echo -e "restauraciones de configuraciones personalizadas finalizadas"
 echo -e

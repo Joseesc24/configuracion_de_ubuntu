@@ -5,6 +5,7 @@ echo -e
 sudo -k
 
 home=$HOME
+user=$USER
 
 sudo -v
 echo -e
