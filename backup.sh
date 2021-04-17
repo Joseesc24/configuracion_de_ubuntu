@@ -84,6 +84,7 @@ echo -e "respaldando configuraciones de snap"
 ruta_backup_snap=$backups_path/snap
 ruta_origen_snap=/var/lib/snapd/desktop/applications/
 copiar_revisando_origen_y_destino $ruta_origen_snap $ruta_backup_snap
+sleep 2
 sudo find $ruta_backup_snap -type f -exec chmod 777 {} \;
 
 echo -e
