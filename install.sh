@@ -14,7 +14,7 @@ echo -e
 echo -e "Iniciando instalaciones"
 
 echo -e
-sudo $home$scripts_path/update.sh
+sudo $scripts_path/update.sh
 echo -e
 
 echo -e "Instalando programas de snap"
@@ -236,7 +236,7 @@ else
 fi
 
 echo -e
-sudo $home$scripts_path/update.sh
+sudo $scripts_path/update.sh
 echo -e
 
 echo -e "Instalaciones finalizadas"
