@@ -17,6 +17,7 @@ echo -e
 echo -e "actualizando versiones de repositorios y paquetes"
 echo -e
 
+sudo apt-get --fix-broken install -y
 sudo apt-get update -y --fix-missing
 
 echo -e
