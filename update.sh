@@ -17,13 +17,13 @@ echo -e
 echo -e "actualizando versiones de repositorios y paquetes"
 echo -e
 
-sudo apt-get --fix-broken install -y
 sudo apt-get update -y --fix-missing
 
 echo -e
 echo -e "instalando repositorios y paquetes actualizados"
 echo -e
 
+sudo apt-get --fix-broken install -y
 sudo apt-get upgrade -y --fix-missing
 
 echo -e
