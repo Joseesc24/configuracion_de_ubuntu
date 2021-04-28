@@ -96,11 +96,5 @@ copiar_revisando_origen_y_destino $rute_origen_zsh_1 $ruta_backup_zsh
 copiar_revisando_origen_y_destino $rute_origen_zsh_2 $ruta_backup_zsh
 
 echo -e
-echo -e "respaldando configuraciones de vlc"
-ruta_backup_vlc=$backups_path/vlc
-ruta_origen_vlc=$home/snap/vlc/eDark_Vlc.vlt
-copiar_revisando_origen_y_destino $ruta_origen_vlc $ruta_backup_vlc
-
-echo -e
 echo -e "respaldo de configuraciones personalizadas finalizado"
 echo -e

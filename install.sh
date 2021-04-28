@@ -19,7 +19,6 @@ echo -e
 
 echo -e "Instalando programas de snap"
 
-sudo snap install vlc
 sudo snap install krita
 sudo snap install ngrok
 sudo snap install drawio

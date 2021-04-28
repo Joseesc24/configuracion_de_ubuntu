@@ -85,12 +85,6 @@ sustituir_revisando_origen_y_destino $ruta_backup_zsh_1 $rute_origen_zsh
 sustituir_revisando_origen_y_destino $ruta_backup_zsh_2 $rute_origen_zsh
 
 echo -e
-echo -e "restaurando configuraciones de vlc"
-ruta_backup_vlc=$backups_path/vlc/eDark_Vlc.vlt
-ruta_origen_vlc=$home/snap/vlc
-sustituir_revisando_origen_y_destino $ruta_backup_vlc $ruta_origen_vlc
-
-echo -e
 echo -e "restaurando configuraciones de numix"
 gsettings set org.gnome.desktop.interface icon-theme 'Numix-Circle'
 
