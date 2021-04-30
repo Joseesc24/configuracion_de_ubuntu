@@ -28,6 +28,27 @@ sudo snap install telegram-desktop
 echo -e
 echo -e
 sudo apt-get update >/dev/null
+echo -e "Desinstalando paquetes innecesarios"
+
+docker_uninstall=(
+    "firefox"
+)
+
+for i in "${docker_uninstall[@]}"; do
+    the_package=$i
+    echo -e "Eliminando $the_package"
+    echo -e "Validando instalación del paquete $the_package"
+    if dpkg -s $the_package &>/dev/null; then
+        echo -e "El paquete $the_package está instalado, eliminando el paquete"
+        sudo apt purge -y $the_package
+    else
+        echo -e "El paquete $the_package no está instalado, no hace falta hacer más cambios"
+    fi
+done
+
+echo -e
+echo -e
+sudo apt-get update >/dev/null
 echo -e "Instalando programas de repositorios externos"
 
 declare -A ppa_instalations=(
