@@ -35,7 +35,6 @@ declare -A ppa_instalations=(
     ["timeshift"]="ppa:teejee2008/timeshift"
     ["neofetch"]="ppa:dawidd0811/neofetch"
     ["tilix"]="ppa:ubuntuhandbook1/tilix"
-    ["python3.7"]="ppa:deadsnakes/ppa"
 )
 
 for i in "${!ppa_instalations[@]}"; do
@@ -70,17 +69,13 @@ default_instalations=(
     "numix-icon-theme-circle"
     "usb-creator-gtk"
     "gnome-tweaks"
-    "python3-venv"
-    "python3-pip"
     "authbind"
     "cmatrix"
     "baobab"
-    "nodejs"
     "neovim"
     "steam"
     "tree"
     "htop"
-    "npm"
     "vim"
     "git"
     "zsh"
