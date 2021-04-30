@@ -19,16 +19,11 @@ echo -e
 
 echo -e "Instalando programas de snap"
 
-sudo snap install krita
 sudo snap install ngrok
 sudo snap install drawio
-sudo snap install postman
 sudo snap install spotify
-sudo snap install jupyter
-sudo snap install inkscape
 sudo snap install code --classic
 sudo snap install telegram-desktop
-sudo snap install gitkraken --classic
 
 echo -e
 echo -e
@@ -83,7 +78,6 @@ default_instalations=(
     "nodejs"
     "neovim"
     "steam"
-    "gnupg"
     "tree"
     "htop"
     "npm"
@@ -196,38 +190,6 @@ done
 echo -e
 echo -e
 sudo apt-get update >/dev/null
-echo -e "Instalando llave de MongoDB"
-
-wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add - &>/dev/null
-echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list &>/dev/null
-
-echo -e
-echo -e
-sudo apt-get update >/dev/null
-echo -e "Instalando paquetes de MongoDB"
-
-mongodb_install=(
-    "mongodb-org"
-)
-
-for i in "${mongodb_install[@]}"; do
-    the_package=$i
-    echo -e "Instalando $the_package"
-    echo -e "Validando instalación del paquete $the_package"
-    if dpkg -s $the_package &>/dev/null; then
-        echo -e "El paquete $the_package está instalado, no hace falta hacer más cambios"
-    else
-        echo -e "El paquete $the_package no está instalado, instalandolo"
-        sudo apt-get install -y $the_package
-    fi
-done
-
-sudo systemctl daemon-reload
-sudo systemctl enable mongod
-
-echo -e
-echo -e
-sudo apt-get update >/dev/null
 echo -e "Instalando chrome"
 
 if command -v google-chrome-stable &>/dev/null; then
@@ -238,21 +200,6 @@ else
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     sudo apt install -y ./google-chrome-stable_current_amd64.deb
     rm -r google-chrome-stable_current_amd64.deb
-fi
-
-echo -e
-echo -e
-sudo apt-get update >/dev/null
-echo -e "Instalando MongoDB-compass"
-
-if command -v mongodb-compass &>/dev/null; then
-    echo -e "compass ya está instalado, no hace falta hacer más cambios"
-else
-    echo -e "compass no está instalado, instalandolo"
-    sudo apt-get update >/dev/null
-    wget https://downloads.mongodb.com/compass/mongodb-compass_1.26.1_amd64.deb
-    sudo dpkg -i mongodb-compass_1.26.1_amd64.deb
-    rm -r mongodb-compass_1.26.1_amd64.deb
 fi
 
 echo -e
