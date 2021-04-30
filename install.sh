@@ -91,7 +91,6 @@ default_instalations=(
     "usb-creator-gtk"
     "gnome-tweaks"
     "authbind"
-    "cmatrix"
     "baobab"
     "steam"
     "tree"
