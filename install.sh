@@ -72,11 +72,9 @@ default_instalations=(
     "authbind"
     "cmatrix"
     "baobab"
-    "neovim"
     "steam"
     "tree"
     "htop"
-    "vim"
     "git"
     "zsh"
 )
