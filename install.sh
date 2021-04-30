@@ -31,6 +31,8 @@ sudo apt-get update >/dev/null
 echo -e "Desinstalando paquetes innecesarios"
 
 docker_uninstall=(
+    "gnome-power-manager"
+    "gnome-calculator"
     "firefox"
 )
 
