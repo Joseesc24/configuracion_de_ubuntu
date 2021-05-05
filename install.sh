@@ -22,6 +22,7 @@ echo -e "Instalando programas de snap"
 sudo snap install ngrok
 sudo snap install drawio
 sudo snap install spotify
+sudo snap install jupyter
 sudo snap install code --classic
 sudo snap install telegram-desktop
 
@@ -32,6 +33,7 @@ echo -e "Desinstalando paquetes innecesarios"
 
 docker_uninstall=(
     "gnome-power-manager"
+    "gnome-characters"
     "gnome-calculator"
     "firefox"
 )
