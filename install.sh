@@ -97,11 +97,11 @@ default_instalations=(
     "authbind"
     "cmatrix"
     "baobab"
-    "steam"
     "tree"
     "htop"
     "git"
     "zsh"
+    "vim"
 )
 
 for i in "${default_instalations[@]}"; do
