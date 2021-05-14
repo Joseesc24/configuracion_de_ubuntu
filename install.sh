@@ -24,7 +24,6 @@ sudo snap install ngrok
 sudo snap install drawio
 sudo snap install spotify
 sudo snap install code --classic
-sudo snap install telegram-desktop
 
 echo -e
 echo -e
@@ -97,6 +96,7 @@ default_instalations=(
     "authbind"
     "cmatrix"
     "baobab"
+    "neovim"
     "tree"
     "htop"
     "git"
