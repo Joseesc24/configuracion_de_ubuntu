@@ -1,1 +1,12 @@
+# backups folder
 backups
+
+# vscode workspace file.
+*.code-workspace
+
+# vscode devcontainer and general setups.
+*.devcontainer
+*.vscode
+
+# specific exceptions of vscode development files.
+!vscode/*
