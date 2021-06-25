@@ -23,6 +23,7 @@ echo -e "Instalando programas de snap"
 sudo snap install ngrok
 sudo snap install drawio
 sudo snap install spotify
+sudo snap install inkscape
 sudo snap install code --classic
 
 echo -e
@@ -94,7 +95,6 @@ default_instalations=(
     "usb-creator-gtk"
     "gnome-tweaks"
     "authbind"
-    "cmatrix"
     "baobab"
     "neovim"
     "tree"
