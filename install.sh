@@ -95,6 +95,7 @@ default_instalations=(
     "usb-creator-gtk"
     "gnome-tweaks"
     "authbind"
+    "preload"
     "baobab"
     "neovim"
     "tree"
