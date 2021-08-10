@@ -20,6 +20,7 @@ echo -e
 
 echo -e "Instalando programas de snap"
 
+sudo snap install vlc
 sudo snap install ngrok
 sudo snap install drawio
 sudo snap install spotify
@@ -97,6 +98,7 @@ default_instalations=(
     "authbind"
     "preload"
     "baobab"
+    "deluge"
     "neovim"
     "tree"
     "htop"
