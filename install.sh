@@ -21,6 +21,7 @@ echo -e
 echo -e "Instalando programas de snap"
 
 sudo snap install vlc
+sudo snap install teams
 sudo snap install ngrok
 sudo snap install drawio
 sudo snap install spotify
@@ -97,6 +98,7 @@ default_instalations=(
     "gnome-tweaks"
     "authbind"
     "preload"
+    "cmatrix"
     "baobab"
     "deluge"
     "neovim"
