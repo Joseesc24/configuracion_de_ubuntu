@@ -1,9 +1,3 @@
-# backups folder
-backups
-
-# vscode workspace file.
-*.code-workspace
-
 # vscode devcontainer and general setups.
 *.devcontainer
 *.vscode
