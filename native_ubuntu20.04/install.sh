@@ -26,8 +26,8 @@ sudo snap install ngrok
 sudo snap install drawio
 sudo snap install spotify
 sudo snap install inkscape
-sudo snap install dbeaver-ce
 sudo snap install code --classic
+sudo snap install beekeeper-studio
 sudo snap install telegram-desktop
 
 echo -e
