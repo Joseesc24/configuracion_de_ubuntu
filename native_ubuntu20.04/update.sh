@@ -42,8 +42,12 @@ print_title "7/8 - Verificando Permisos De Los Scripts Personalizados"
 
 sudo find $scripts_path -type f -exec chmod 777 {} \;
 
+print_text "verificación de permisos finalizada"
+
 print_title "8/8 - Verificando Permisos De Los Directorios Y Subdirectorios De Home"
 
 sudo find $home/ -type d -exec chmod 755 {} \;
+
+print_text "verificación de permisos finalizada"
 
 print_title "Actualizaciones Finalizadas"
