@@ -1,24 +1,15 @@
 #!/bin/bash
 
-set -e
-
-echo -e
-sudo -k
-
 scripts_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
-home=$HOME
-user=$USER
+source $scripts_path/commons.sh
 
-sudo -v
-echo -e
+remove_and_ask_password
 
-echo -e "Iniciando instalaciones"
+print_title "Iniciando instalaciones"
 
-echo -e
 sudo $scripts_path/update.sh
-echo -e
 
-echo -e "Instalando programas de snap"
+print_title "1/15 - Instalando programas de snap"
 
 sudo snap install vlc
 sudo snap install teams
@@ -30,34 +21,39 @@ sudo snap install code --classic
 sudo snap install beekeeper-studio
 sudo snap install telegram-desktop
 
-echo -e
-echo -e
-sudo apt-get update >/dev/null
-echo -e "Desinstalando paquetes innecesarios"
+quiet_update
+print_title "2/15 - Desinstalando paquetes innecesarios"
 
-docker_uninstall=(
+uninstall=(
     "gnome-power-manager"
     "gnome-characters"
     "gnome-calculator"
     "firefox"
 )
 
-for i in "${docker_uninstall[@]}"; do
-    the_package=$i
-    echo -e "Eliminando $the_package"
-    echo -e "Validando instalación del paquete $the_package"
+for the_package in "${uninstall[@]}"; do
+
+    print_text "Eliminando $the_package"
+    print_text "Validando instalación del paquete $the_package"
+
     if dpkg -s $the_package &>/dev/null; then
-        echo -e "El paquete $the_package está instalado, eliminando el paquete"
+
+        print_text "El paquete $the_package está instalado, eliminando el paquete"
+
         sudo apt purge -y $the_package
+
     else
-        echo -e "El paquete $the_package no está instalado, no hace falta hacer más cambios"
+
+        print_text "El paquete $the_package no está instalado, no hace falta hacer más cambios"
+
     fi
+
 done
 
-echo -e
-echo -e
-sudo apt-get update >/dev/null
-echo -e "Instalando programas de repositorios externos"
+quiet_update
+print_title "3/15 - Instalando programas de repositorios externos"
+
+sudo add-apt-repository -y ppa:deadsnakes/ppa
 
 declare -A ppa_instalations=(
     ["indicator-sysmonitor"]="ppa:fossfreedom/indicator-sysmonitor"
@@ -67,68 +63,95 @@ declare -A ppa_instalations=(
 )
 
 for i in "${!ppa_instalations[@]}"; do
+
     the_package=$i
     the_ppa=${ppa_instalations[$i]}
-    echo -e "Instalando $the_package"
-    echo -e "Validando instalación del paquete $the_package"
+
+    print_text "Instalando $the_package"
+    print_text "Validando instalación del paquete $the_package"
+
     if dpkg -s $the_package &>/dev/null; then
-        echo -e "El paquete $the_package está instalado, no hace falta hacer más cambios"
+
+        print_text "El paquete $the_package está instalado, no hace falta hacer más cambios"
+
     else
-        echo -e "El paquete $the_package no está instalado, instalandolo"
-        echo -e "Validando instalación del repositorio $the_ppa"
+
+        print_text "El paquete $the_package no está instalado, instalandolo"
+        print_text "Validando instalación del repositorio $the_ppa"
+
         if ! grep -q "^deb .*$the_ppa" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
-            echo -e "El repositorio $the_ppa no está agregado al sistema de repositorios, agregandolo"
-            sudo apt-get update >/dev/null
+
+            print_text "El repositorio $the_ppa no está agregado al sistema de repositorios, agregandolo"
+
+            quiet_update
             sudo add-apt-repository -y $the_ppa
+
         else
-            echo -e "El repositorio $the_ppa ya esta agregado al sistema de repositorios"
+
+            print_text "El repositorio $the_ppa ya esta agregado al sistema de repositorios"
+
         fi
-        echo -e "Instalando $the_package"
-        sudo apt-get update >/dev/null
+
+        print_text "Instalando $the_package"
+
+        quiet_update
         sudo apt-get install -y $the_package
+
     fi
+
 done
 
-echo -e
-echo -e
-sudo apt-get update >/dev/null
-echo -e "Instalando programas de repositorios por defecto"
+quiet_update
+print_title "4/15 - Instalando programas de repositorios por defecto"
 
 default_instalations=(
     "numix-icon-theme-circle"
+    "postgresql-contrib"
     "usb-creator-gtk"
     "gconf2-common"
     "libgconf-2-4"
     "gnome-tweaks"
+    "redis-server"
+    "virtualenv"
+    "postgresql"
+    "python3.7"
     "authbind"
     "preload"
+    "sqlite3"
     "baobab"
+    "nodejs"
     "deluge"
     "neovim"
     "gnupg"
     "tree"
     "htop"
     "git"
+    "npm"
     "zsh"
     "vim"
 )
 
-for i in "${default_instalations[@]}"; do
-    the_package=$i
-    echo -e "Instalando $the_package"
-    echo -e "Validando instalación del paquete $the_package"
+for the_package in "${default_instalations[@]}"; do
+
+    print_text "Instalando $the_package"
+    print_text "Validando instalación del paquete $the_package"
+
     if dpkg -s $the_package &>/dev/null; then
-        echo -e "El paquete $the_package está instalado, no hace falta hacer más cambios"
+
+        print_text "El paquete $the_package está instalado, no hace falta hacer más cambios"
+
     else
-        echo -e "El paquete $the_package no está instalado, instalandolo"
+
+        print_text "El paquete $the_package no está instalado, instalandolo"
+
         sudo apt-get install -y $the_package
+
     fi
+
 done
 
-echo -e
-echo -e
-sudo apt-get update >/dev/null
-echo -e "Desinstalando paquetes viejos de docker-engine"
+quiet_update
+print_title "5/15 - Desinstalando paquetes viejos de docker-engine"
 
 docker_uninstall=(
     "docker-engine"
@@ -138,22 +161,27 @@ docker_uninstall=(
     "runc"
 )
 
-for i in "${docker_uninstall[@]}"; do
-    the_package=$i
-    echo -e "Eliminando $the_package"
-    echo -e "Validando instalación del paquete $the_package"
+for the_package in "${docker_uninstall[@]}"; do
+
+    print_text "Eliminando $the_package"
+    print_text "Validando instalación del paquete $the_package"
+
     if dpkg -s $the_package &>/dev/null; then
-        echo -e "El paquete $the_package está instalado, eliminando el paquete"
+
+        print_text "El paquete $the_package está instalado, eliminando el paquete"
+
         sudo apt remove -y $the_package
+
     else
-        echo -e "El paquete $the_package no está instalado, no hace falta hacer más cambios"
+
+        print_text "El paquete $the_package no está instalado, no hace falta hacer más cambios"
+
     fi
+
 done
 
-echo -e
-echo -e
-sudo apt-get update >/dev/null
-echo -e "Instalando paquetes requisito de docker-engine"
+quiet_update
+print_title "6/15 - Instalando paquetes requisito de docker-engine"
 
 docker_install=(
     "apt-transport-https"
@@ -163,38 +191,45 @@ docker_install=(
     "curl"
 )
 
-for i in "${docker_install[@]}"; do
-    the_package=$i
-    echo -e "Instalando $the_package"
-    echo -e "Validando instalación del paquete $the_package"
+for the_package in "${docker_install[@]}"; do
+
+    print_text "Instalando $the_package"
+    print_text "Validando instalación del paquete $the_package"
+
     if dpkg -s $the_package &>/dev/null; then
-        echo -e "El paquete $the_package está instalado, no hace falta hacer más cambios"
+
+        print_text "El paquete $the_package está instalado, no hace falta hacer más cambios"
+
     else
-        echo -e "El paquete $the_package no está instalado, instalandolo"
+
+        print_text "El paquete $the_package no está instalado, instalandolo"
         sudo apt-get install -y $the_package
+
     fi
+
 done
 
-echo -e
-echo -e
-sudo apt-get update >/dev/null
-echo -e "Instalando llave GPG de docker-engine"
+quiet_update
+print_title "7/15 - Instalando llave GPG de docker-engine"
 
 docker_key=/usr/share/keyrings/docker-archive-keyring.gpg
+
 if test -f $docker_key; then
-    echo "La llave GPG de docker-engine existe en $docker_key"
+
+    print_text "La llave GPG de docker-engine existe en $docker_key"
     sudo rm -r /usr/share/keyrings/docker-archive-keyring.gpg
+
 else
-    echo "La llave GPG de docker-engine no existe"
+
+    print_text "La llave GPG de docker-engine no existe"
+
 fi
 
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list &>/dev/null
 
-echo -e
-echo -e
-sudo apt-get update >/dev/null
-echo -e "Instalando paquetes de docker-engine"
+quiet_update
+print_title "8/15 - Instalando paquetes de docker-engine"
 
 docker_engine_install=(
     "docker-ce-cli"
@@ -202,51 +237,54 @@ docker_engine_install=(
     "docker-ce"
 )
 
-for i in "${docker_engine_install[@]}"; do
-    the_package=$i
-    echo -e "Instalando $the_package"
-    echo -e "Validando instalación del paquete $the_package"
+for the_package in "${docker_engine_install[@]}"; do
+
+    print_text "Instalando $the_package"
+    print_text "Validando instalación del paquete $the_package"
+
     if dpkg -s $the_package &>/dev/null; then
-        echo -e "El paquete $the_package está instalado, no hace falta hacer más cambios"
+
+        print_text "El paquete $the_package está instalado, no hace falta hacer más cambios"
+
     else
-        echo -e "El paquete $the_package no está instalado, instalandolo"
+
+        print_text "El paquete $the_package no está instalado, instalandolo"
+
         sudo apt-get install -y $the_package
+
     fi
+
 done
 
-echo -e
-echo -e
-sudo apt-get update >/dev/null
-echo -e "Instalando llave de MongoDB"
+quiet_update
+print_title "9/15 - Instalando llave de MongoDB"
 
 wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add - &>/dev/null
 echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list &>/dev/null
 
-echo -e
-echo -e
-sudo apt-get update >/dev/null
-echo -e "Instalando paquetes de MongoDB"
+quiet_update
+print_title "10/15 - Instalando paquetes de MongoDB"
 
 mongodb_install=(
     "mongodb-org"
 )
 
-for i in "${mongodb_install[@]}"; do
+for the_package in "${mongodb_install[@]}"; do
 
-    the_package=$i
-
-    echo -e "Instalando $the_package"
-    echo -e "Validando instalación del paquete $the_package"
+    print_text "Instalando $the_package"
+    print_text "Validando instalación del paquete $the_package"
 
     if dpkg -s $the_package &>/dev/null; then
 
-        echo -e "El paquete $the_package está instalado, no hace falta hacer más cambios"
+        print_text "El paquete $the_package está instalado, no hace falta hacer más cambios"
 
     else
 
-        echo -e "El paquete $the_package no está instalado, instalandolo"
+        print_text "El paquete $the_package no está instalado, instalandolo"
+
+        quiet_update
+
         sudo apt-get install -y $the_package
-        sudo apt-get update >/dev/null
 
     fi
 
@@ -255,74 +293,106 @@ done
 sudo systemctl daemon-reload
 sudo systemctl enable mongod
 
-echo -e
-echo -e
-sudo apt-get update >/dev/null
-echo -e "Instalando chrome"
+quiet_update
+print_title "11/15 - Instalando chrome"
 
 if command -v google-chrome-stable &>/dev/null; then
-    echo -e "chrome ya está instalado, no hace falta hacer más cambios"
+
+    print_text "chrome ya está instalado, no hace falta hacer más cambios"
+
 else
-    echo -e "chrome no está instalado, instalandolo"
-    sudo apt-get update >/dev/null
+
+    print_text "chrome no está instalado, instalandolo"
+
+    quiet_update
+
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     sudo apt install -y ./google-chrome-stable_current_amd64.deb
     rm -r google-chrome-stable_current_amd64.deb
+
 fi
 
-echo -e
-echo -e
-sudo apt-get update >/dev/null
-echo -e "Instalando dive"
+quiet_update
+print_title "12/15 - Instalando dive"
 
 if command -v dive &>/dev/null; then
-    echo -e "dive ya está instalado, no hace falta hacer más cambios"
+
+    print_text "dive ya está instalado, no hace falta hacer más cambios"
+
 else
-    echo -e "dive no está instalado, instalandolo"
-    sudo apt-get update >/dev/null
+
+    print_text "dive no está instalado, instalandolo"
+
+    quiet_update
+
     wget https://github.com/wagoodman/dive/releases/download/v0.9.2/dive_0.9.2_linux_amd64.deb
     sudo apt-get install -y ./dive_0.9.2_linux_amd64.deb
     rm -r dive_0.9.2_linux_amd64.deb
+
 fi
 
-echo -e
-echo -e
-sudo apt-get update >/dev/null
-echo -e "Instalando MongoDB-compass"
+quiet_update
+print_title "13/15 - Instalando MongoDB-compass"
 
 if command -v mongodb-compass &>/dev/null; then
-    echo -e "compass ya está instalado, no hace falta hacer más cambios"
+
+    print_text "compass ya está instalado, no hace falta hacer más cambios"
+
 else
-    echo -e "compass no está instalado, instalandolo"
-    sudo apt-get update >/dev/null
+
+    print_text "compass no está instalado, instalandolo"
+
+    quiet_update
+
     wget https://downloads.mongodb.com/compass/mongodb-compass_1.26.1_amd64.deb
     sudo dpkg -i mongodb-compass_1.26.1_amd64.deb
     rm -r mongodb-compass_1.26.1_amd64.deb
+
 fi
 
-echo -e
-echo -e
-sudo apt-get update >/dev/null
-echo -e "Instalando docker-compose"
+quiet_update
+print_title "14/15 - Instalando Go"
 
-if command -v docker-compose &>/dev/null; then
+if command -v go &>/dev/null; then
 
-    echo -e "docker-compose ya está instalado, no hace falta hacer más cambios"
+    print_text "go ya está instalado, no hace falta hacer más cambios"
 
 else
 
-    echo -e "docker-compose no está instalado, instalandolo"
+    print_text "go no está instalado, instalandolo"
 
-    sudo apt-get update >/dev/null
+    quiet_update
+
+    wget https://golang.org/dl/go1.17.3.linux-amd64.tar.gz
+    sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.17.3.linux-amd64.tar.gz
+    sudo rm -r go1.17.3.linux-amd64.tar.gz
+
+    sudo echo "export GOPATH=$HOME/go" >>~/.profile
+    sudo echo "export PATH=$PATH:$GOPATH/bin" >>~/.profile
+    sudo echo "export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin" >>~/.profile
+
+    source ~/.profile
+
+fi
+
+quiet_update
+print_title "15/15 - Instalando docker-compose"
+
+if command -v docker-compose &>/dev/null; then
+
+    print_text "docker-compose ya está instalado, no hace falta hacer más cambios"
+
+else
+
+    print_text "docker-compose no está instalado, instalandolo"
+
+    quiet_update
 
     sudo curl -L "https://github.com/docker/compose/releases/download/1.28.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
 
 fi
 
-echo -e
 sudo $scripts_path/update.sh
-echo -e
 
-echo -e "Instalaciones finalizadas"
-echo -e
+print_title "Instalaciones finalizadas"

@@ -37,3 +37,9 @@ remove_and_ask_password() {
     sudo -v
 
 }
+
+quiet_update() {
+
+    sudo apt-get update >/dev/null
+
+}
