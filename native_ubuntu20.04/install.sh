@@ -97,13 +97,15 @@ echo -e "Instalando programas de repositorios por defecto"
 default_instalations=(
     "numix-icon-theme-circle"
     "usb-creator-gtk"
+    "gconf2-common"
+    "libgconf-2-4"
     "gnome-tweaks"
     "authbind"
     "preload"
-    "cmatrix"
     "baobab"
     "deluge"
     "neovim"
+    "gnupg"
     "tree"
     "htop"
     "git"
@@ -215,6 +217,47 @@ done
 echo -e
 echo -e
 sudo apt-get update >/dev/null
+echo -e "Instalando llave de MongoDB"
+
+wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add - &>/dev/null
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list &>/dev/null
+
+echo -e
+echo -e
+sudo apt-get update >/dev/null
+echo -e "Instalando paquetes de MongoDB"
+
+mongodb_install=(
+    "mongodb-org"
+)
+
+for i in "${mongodb_install[@]}"; do
+
+    the_package=$i
+
+    echo -e "Instalando $the_package"
+    echo -e "Validando instalación del paquete $the_package"
+
+    if dpkg -s $the_package &>/dev/null; then
+
+        echo -e "El paquete $the_package está instalado, no hace falta hacer más cambios"
+
+    else
+
+        echo -e "El paquete $the_package no está instalado, instalandolo"
+        sudo apt-get install -y $the_package
+        sudo apt-get update >/dev/null
+
+    fi
+
+done
+
+sudo systemctl daemon-reload
+sudo systemctl enable mongod
+
+echo -e
+echo -e
+sudo apt-get update >/dev/null
 echo -e "Instalando chrome"
 
 if command -v google-chrome-stable &>/dev/null; then
@@ -245,15 +288,36 @@ fi
 echo -e
 echo -e
 sudo apt-get update >/dev/null
+echo -e "Instalando MongoDB-compass"
+
+if command -v mongodb-compass &>/dev/null; then
+    echo -e "compass ya está instalado, no hace falta hacer más cambios"
+else
+    echo -e "compass no está instalado, instalandolo"
+    sudo apt-get update >/dev/null
+    wget https://downloads.mongodb.com/compass/mongodb-compass_1.26.1_amd64.deb
+    sudo dpkg -i mongodb-compass_1.26.1_amd64.deb
+    rm -r mongodb-compass_1.26.1_amd64.deb
+fi
+
+echo -e
+echo -e
+sudo apt-get update >/dev/null
 echo -e "Instalando docker-compose"
 
 if command -v docker-compose &>/dev/null; then
+
     echo -e "docker-compose ya está instalado, no hace falta hacer más cambios"
+
 else
+
     echo -e "docker-compose no está instalado, instalandolo"
+
     sudo apt-get update >/dev/null
+
     sudo curl -L "https://github.com/docker/compose/releases/download/1.28.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
+
 fi
 
 echo -e

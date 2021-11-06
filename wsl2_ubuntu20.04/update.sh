@@ -1,59 +1,49 @@
 #!/bin/bash
 
-set -e
-
-echo -e
-sudo -k
-
 scripts_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+source $scripts_path/commons.sh
+
 home=$HOME
 user=$USER
 
-sudo -v
-echo -e
+remove_and_ask_password
 
-echo -e "iniciando actualizaciones"
+print_title "Iniciando Actualizaciones"
 
-echo -e
-echo -e "actualizando versiones de repositorios y paquetes"
-echo -e
+print_title "1/8 - Actualizando Versiones De Repositorios Y Paquetes"
 
 sudo apt-get update -y --fix-missing
 
-echo -e
-echo -e "instalando repositorios y paquetes actualizados"
-echo -e
+print_title "2/8 - Instalando Repositorios Y Paquetes Actualizados"
 
 sudo apt-get --fix-broken install -y
 sudo apt-get upgrade -y --fix-missing
 
-echo -e
-echo -e "comprobando y actualizando version del kernel"
-echo -e
+print_title "3/8 - Comprobando Y Actualizando Version Del Kernel"
 
 sudo apt-get dist-upgrade -y --fix-missing
 
-echo -e
-echo -e "comprobando instalaciones nuevas"
-echo -e
+print_title "4/8 - Comprobando Instalaciones Nuevas"
 
 sudo apt-get check -y
 
-echo -e
-echo -e "reparando paquetes y dependencias dañadas"
-echo -e
+print_title "5/8 - Reparando Paquetes Y Dependencias Dañadas"
 
 sudo apt --fix-broken -y install
 
-echo -e
-echo -e "eliminando paquetes y repositorios innecesarios"
-echo -e
+print_title "6/8 - Eliminando Paquetes Y Repositorios Innecesarios"
 
 sudo apt autoremove -y
 sudo apt autoclean -y
 sudo apt remove -y
 sudo apt clean -y
 
-echo -e
-echo -e "actualizaciones finalizadas"
-echo -e
+print_title "7/8 - Verificando Permisos De Los Scripts Personalizados"
+
+sudo find $scripts_path -type f -exec chmod 777 {} \;
+
+print_title "8/8 - Verificando Permisos De Los Directorios Y Subdirectorios De Home"
+
+sudo find $home/ -type d -exec chmod 755 {} \;
+
+print_title "Actualizaciones Finalizadas"

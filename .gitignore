@@ -1,4 +1,5 @@
 # vscode devcontainer and general setups.
+*.tar.gz
 *.devcontainer
 *.vscode
 
