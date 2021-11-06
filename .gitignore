@@ -4,3 +4,6 @@
 
 # specific exceptions of vscode development files.
 !vscode/*
+
+# backup folders
+backup
