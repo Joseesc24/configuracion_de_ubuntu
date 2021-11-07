@@ -127,7 +127,6 @@ fi
 
 print_text "creando respaldo nuevo"
 
-tar -zcvf backups.tar.gz backups
 rm -r backups
 
 print_text "respaldo creado"
