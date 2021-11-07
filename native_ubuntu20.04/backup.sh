@@ -120,6 +120,8 @@ copiar_revisando_origen_y_destino $rute_origen_zsh_2 $ruta_backup_zsh
 
 print_title "7/7 - Comprimiendo Resplado En Un Archivo Tar"
 
+cd $scripts_path
+
 if test -f backups.tar.gz; then
     print_text "borrando respaldo anterior"
     rm -r backups.tar.gz
@@ -127,6 +129,7 @@ fi
 
 print_text "creando respaldo nuevo"
 
+tar -zcvf backups.tar.gz backups
 rm -r backups
 
 print_text "respaldo creado"

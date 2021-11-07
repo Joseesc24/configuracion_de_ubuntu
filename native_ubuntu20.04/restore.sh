@@ -58,6 +58,8 @@ print_title "Iniciando Restauración De Configuraciones Personalizadas"
 
 print_title "1/10 - Descomprimiendo Directorio De Respaldos"
 
+cd $scripts_path
+
 if test -f backups.tar.gz; then
 
     print_text "respaldo encontrado"
