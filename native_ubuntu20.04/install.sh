@@ -11,9 +11,9 @@ sudo $scripts_path/update.sh
 
 print_title "1/14 - Instalando programas de snap"
 
-sudo snap install vlc
 sudo snap install ngrok
 sudo snap install drawio
+sudo snap install postman
 sudo snap install spotify
 sudo snap install code --classic
 sudo snap install beekeeper-studio
