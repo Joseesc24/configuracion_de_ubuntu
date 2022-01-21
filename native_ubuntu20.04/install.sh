@@ -15,6 +15,7 @@ sudo snap install ngrok
 sudo snap install drawio
 sudo snap install postman
 sudo snap install spotify
+sudo snap install remmina
 sudo snap install code --classic
 sudo snap install beekeeper-studio
 sudo snap install telegram-desktop
@@ -112,6 +113,7 @@ default_instalations=(
     "redis-server"
     "postgresql"
     "authbind"
+    "cmatrix"
     "preload"
     "sqlite3"
     "baobab"
