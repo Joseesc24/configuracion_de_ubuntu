@@ -127,12 +127,14 @@ default_instalations=(
     "neovim"
     "golang"
     "gnupg"
+    "steam"
     "tree"
     "htop"
     "git"
     "zsh"
     "vim"
     "npm"
+    "vlc"
 )
 
 for the_package in "${default_instalations[@]}"; do
