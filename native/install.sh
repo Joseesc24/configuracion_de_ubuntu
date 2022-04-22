@@ -9,7 +9,7 @@ print_title "Iniciando instalaciones"
 
 sudo $scripts_path/update.sh
 
-print_title "1/14 - Instalando programas de snap"
+print_title "1/15 - Instalando programas de snap"
 
 sudo snap install ngrok
 sudo snap install drawio
@@ -21,13 +21,15 @@ sudo snap install beekeeper-studio
 sudo snap install telegram-desktop
 
 quiet_update
-print_title "2/14 - Desinstalando paquetes innecesarios"
+print_title "2/15 - Desinstalando paquetes innecesarios"
+
+sudo snap remove firefox
 
 uninstall=(
     "gnome-power-manager"
     "gnome-characters"
     "gnome-calculator"
-    "firefox"
+    "imagemagick"
 )
 
 for the_package in "${uninstall[@]}"; do
@@ -50,15 +52,10 @@ for the_package in "${uninstall[@]}"; do
 done
 
 quiet_update
-print_title "3/14 - Instalando programas de repositorios externos"
-
-sudo add-apt-repository -y ppa:deadsnakes/ppa
+print_title "3/15 - Instalando programas de repositorios externos"
 
 declare -A ppa_instalations=(
-    ["indicator-sysmonitor"]="ppa:fossfreedom/indicator-sysmonitor"
-    ["timeshift"]="ppa:teejee2008/timeshift"
-    ["neofetch"]="ppa:dawidd0811/neofetch"
-    ["tilix"]="ppa:ubuntuhandbook1/tilix"
+    ["deadsnakes"]="ppa:deadsnakes/ppa"
 )
 
 for i in "${!ppa_instalations[@]}"; do
@@ -69,7 +66,7 @@ for i in "${!ppa_instalations[@]}"; do
     print_text "Instalando $the_package"
     print_text "Validando instalación del paquete $the_package"
 
-    if dpkg -s $the_package &>/dev/null; then
+    if ! grep -q "^deb .*$the_ppa" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
 
         print_text "El paquete $the_package está instalado, no hace falta hacer más cambios"
 
@@ -101,23 +98,26 @@ for i in "${!ppa_instalations[@]}"; do
 done
 
 quiet_update
-print_title "4/14 - Instalando programas de repositorios por defecto"
+print_title "4/15 - Instalando programas de repositorios por defecto"
 
 default_instalations=(
     "software-properties-common"
+    "gir1.2-appindicator3-0.1"
     "numix-icon-theme-circle"
     "postgresql-contrib"
     "usb-creator-gtk"
     "openjdk-11-jre"
     "openjdk-11-jdk"
+    "python3-psutil"
     "gconf2-common"
     "libgconf-2-4"
-    "gnome-tweaks"
     "redis-server"
     "virtualenv"
     "postgresql"
-    "python3.7"
+    "timeshift"
+    "python3.8"
     "authbind"
+    "neofetch"
     "cmatrix"
     "preload"
     "sqlite3"
@@ -128,6 +128,7 @@ default_instalations=(
     "golang"
     "gnupg"
     "steam"
+    "tilix"
     "tree"
     "htop"
     "git"
@@ -157,7 +158,7 @@ for the_package in "${default_instalations[@]}"; do
 done
 
 quiet_update
-print_title "5/14 - Desinstalando paquetes viejos de docker-engine"
+print_title "5/15 - Desinstalando paquetes viejos de docker-engine"
 
 docker_uninstall=(
     "docker-engine"
@@ -187,7 +188,7 @@ for the_package in "${docker_uninstall[@]}"; do
 done
 
 quiet_update
-print_title "6/14 - Instalando paquetes requisito de docker-engine"
+print_title "6/15 - Instalando paquetes requisito de docker-engine"
 
 docker_install=(
     "apt-transport-https"
@@ -216,7 +217,7 @@ for the_package in "${docker_install[@]}"; do
 done
 
 quiet_update
-print_title "7/14 - Instalando llave GPG de docker-engine"
+print_title "7/15 - Instalando llave GPG de docker-engine"
 
 docker_key=/usr/share/keyrings/docker-archive-keyring.gpg
 
@@ -235,7 +236,7 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o 
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list &>/dev/null
 
 quiet_update
-print_title "8/14 - Instalando paquetes de docker-engine"
+print_title "8/15 - Instalando paquetes de docker-engine"
 
 docker_engine_install=(
     "docker-ce-cli"
@@ -263,16 +264,16 @@ for the_package in "${docker_engine_install[@]}"; do
 done
 
 quiet_update
-print_title "9/14 - Instalando llave de MongoDB"
+print_title "9/15 - Instalando llave de MongoDB"
 
 wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add - &>/dev/null
 echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list &>/dev/null
 
 quiet_update
-print_title "10/14 - Instalando paquetes de MongoDB"
+print_title "10/15 - Instalando paquetes de MongoDB"
 
 mongodb_install=(
-    "mongodb-org"
+#    "mongodb-org"
 )
 
 for the_package in "${mongodb_install[@]}"; do
@@ -297,10 +298,10 @@ for the_package in "${mongodb_install[@]}"; do
 done
 
 sudo systemctl daemon-reload
-sudo systemctl enable mongod
+#sudo systemctl enable mongod
 
 quiet_update
-print_title "11/14 - Instalando chrome"
+print_title "11/15 - Instalando chrome"
 
 if command -v google-chrome-stable &>/dev/null; then
 
@@ -319,7 +320,7 @@ else
 fi
 
 quiet_update
-print_title "12/14 - Instalando dive"
+print_title "12/15 - Instalando dive"
 
 if command -v dive &>/dev/null; then
 
@@ -338,7 +339,7 @@ else
 fi
 
 quiet_update
-print_title "13/14 - Instalando MongoDB-compass"
+print_title "13/15 - Instalando MongoDB-compass"
 
 if command -v mongodb-compass &>/dev/null; then
 
@@ -357,7 +358,7 @@ else
 fi
 
 quiet_update
-print_title "14/14 - Instalando docker-compose"
+print_title "14/15 - Instalando docker-compose"
 
 if command -v docker-compose &>/dev/null; then
 
@@ -373,6 +374,29 @@ else
     sudo chmod +x /usr/local/bin/docker-compose
 
 fi
+
+quiet_update
+print_title "15/15 - Instalando indicator-sysmonitor"
+
+if command -v indicator-sysmonitor &>/dev/null; then
+
+    print_text "indicator-sysmonitor ya está instalado, no hace falta hacer más cambios"
+
+else
+
+    print_text "indicator-sysmonitor no está instalado, instalandolo"
+
+    quiet_update
+
+    git clone https://github.com/wdbm/indicator-sysmonitor.git
+    cd indicator-sysmonitor
+    sudo make install
+    cd ..
+    rm -rf indicator-sysmonitor
+    indicator-sysmonitor &>/dev/null
+
+fi
+
 
 sudo $scripts_path/update.sh
 
