@@ -56,7 +56,7 @@ sustituir_revisando_origen_y_destino() {
 
 print_title "Iniciando Restauración De Configuraciones Personalizadas"
 
-print_title "1/10 - Descomprimiendo Directorio De Respaldos"
+print_title "01/09 - Descomprimiendo Directorio De Respaldos"
 
 cd $scripts_path
 
@@ -72,35 +72,29 @@ else
     print_title "Restauraciones De Configuraciones Personalizadas Abortada"
 
     exit 1
-    
+
 fi
 
-print_title "2/10 - Restaurando Configuraciones Del Indicador Del Sistema"
-
-ruta_backup_widgets=$backups_path/widgets/.indicator-sysmonitor.json
-ruta_origen_widgets=$home
-sustituir_revisando_origen_y_destino $ruta_backup_widgets $ruta_origen_widgets
-
-print_title "3/10 - Restaurando Configuraciones De Fuentes Personalizadas"
+print_title "02/09 - Restaurando Configuraciones De Fuentes Personalizadas"
 
 ruta_backup_fuentes=$backups_path/fuentes
 ruta_origen_fuentes=$home/.fonts
 sustituir_revisando_origen_y_destino $ruta_backup_fuentes $ruta_origen_fuentes
 
-print_title "4/10 - Restaurando Configuraciones De Terminal"
+print_title "03/09 - Restaurando Configuraciones De Terminal"
 
 ruta_terminal=$backups_path/terminal
 archivo_terminal=$ruta_terminal/gnome-terminal.dconf
 dconf load /org/gnome/terminal/legacy/profiles:/ <$archivo_terminal
 
-print_title "5/10 - Restaurando Configuraciones De Tilix"
+print_title "04/09 - Restaurando Configuraciones De Tilix"
 
 ruta_tilix=$backups_path/tilix
 archivo_tilix=$ruta_tilix/tilix.dconf
 dconf load /com/gexperts/Tilix/ <$archivo_tilix
 sudo update-alternatives --set x-terminal-emulator /usr/bin/tilix.wrapper
 
-print_title "6/10 - Restaurando Configuraciones De Iconos De Snap"
+print_title "05/09 - Restaurando Configuraciones De Iconos De Snap"
 
 ruta_backup_snap=$backups_path/snap
 ruta_origen_snap=/var/lib/snapd/desktop/applications/
@@ -110,7 +104,7 @@ sustituir_revisando_origen_y_destino $ruta_backup_snap $ruta_origen_snap
 sleep 2
 sudo find $ruta_origen_snap -type f -exec chmod 755 {} \;
 
-print_title "7/10 - Restaurando Configuraciones De Zsh Y P10k"
+print_title "06/09 - Restaurando Configuraciones De Zsh Y P10k"
 
 ruta_backup_zsh_1=$backups_path/zsh/.p10k.zsh
 ruta_backup_zsh_2=$backups_path/zsh/.zshrc
@@ -118,11 +112,11 @@ rute_origen_zsh=$home
 sustituir_revisando_origen_y_destino $ruta_backup_zsh_1 $rute_origen_zsh
 sustituir_revisando_origen_y_destino $ruta_backup_zsh_2 $rute_origen_zsh
 
-print_title "8/10 - Restaurando Configuraciones De Iconos Con Numix"
+print_title "07/09 - Restaurando Configuraciones De Iconos Con Numix"
 
 gsettings set org.gnome.desktop.interface icon-theme 'Numix-Circle'
 
-print_title "9/10 - Restaurando Configuraciones De Docker Engine"
+print_title "08/09 - Restaurando Configuraciones De Docker Engine"
 
 if grep -q docker /etc/group; then
 
@@ -148,10 +142,9 @@ else
 
 fi
 
-print_title "10/10 - Eliminando Directorio De Respaldos"
+print_title "09/09 - Eliminando Directorio De Respaldos"
 
 rm -r backups
 print_text "directorio de respaldos removido"
-
 
 print_title "Restauraciones De Configuraciones Personalizadas Finalizadas"
