@@ -7,7 +7,7 @@ remove_and_ask_password
 
 print_title "Iniciando Purga De Docker"
 
-print_title "1/4 - Removiendo Todos Los Contenedores De Docker"
+print_title "01/04 - Removiendo Todos Los Contenedores De Docker"
 
 containers=($(docker ps -aq))
 containers_count=${#containers[@]}
@@ -29,7 +29,7 @@ else
 
 fi
 
-print_title "2/4 - Removiendo Todas Las Imagenes De Docker"
+print_title "02/04 - Removiendo Todas Las Imagenes De Docker"
 
 images=($(docker image ls -q))
 images_count=${#images[@]}
@@ -51,7 +51,7 @@ else
 
 fi
 
-print_title "3/4 - Removiendo Todos Los Volumenes De Docker"
+print_title "03/04 - Removiendo Todos Los Volumenes De Docker"
 
 volumes=($(docker volume ls -q))
 volumes_count=${#volumes[@]}
@@ -73,7 +73,7 @@ else
 
 fi
 
-print_title "4/4 - Removiendo Todas Las Redes De Docker"
+print_title "04/04 - Removiendo Todas Las Redes De Docker"
 
 docker network prune -f
 

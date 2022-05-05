@@ -10,7 +10,7 @@ remove_and_ask_password
 
 print_title "Iniciando Istalación Y Configuración De Zsh"
 
-print_title "1/5 - Instalando Zsh"
+print_title "01/05 - Instalando Zsh"
 
 the_package="zsh"
 
@@ -26,11 +26,11 @@ else
 
 fi
 
-print_title "2/5 - Configurando Zsh Como Shell Por Defecto"
+print_title "02/05 - Configurando Zsh Como Shell Por Defecto"
 
 sudo usermod --shell $(which zsh) $user >/dev/null
 
-print_title "3/5 - Instalando Oh-My-Zsh"
+print_title "03/05 - Instalando Oh-My-Zsh"
 
 folder_path=$home/.oh-my-zsh
 
@@ -47,7 +47,7 @@ else
 
 fi
 
-print_title "4/5 - Instalando Plugins Oficiales De Oh-My-Zsh"
+print_title "04/05 - Instalando Plugins Oficiales De Oh-My-Zsh"
 
 zsh_official_plugins=(
     "zsh-syntax-highlighting"
@@ -72,7 +72,7 @@ for plugin in "${zsh_official_plugins[@]}"; do
 
 done
 
-print_title "5/5 - Instalando Powerlevel10k Para Oh-My-Zsh"
+print_title "05/05 - Instalando Powerlevel10k Para Oh-My-Zsh"
 
 folder_path=${ZSH_CUSTOM:-$home/.oh-my-zsh/custom}/themes/powerlevel10k
 
