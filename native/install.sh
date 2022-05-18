@@ -112,6 +112,7 @@ default_instalations=(
     "gconf2-common"
     "libgconf-2-4"
     "redis-server"
+    "python3-venv"
     "virtualenv"
     "postgresql"
     "timeshift"
