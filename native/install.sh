@@ -116,7 +116,7 @@ default_instalations=(
     "virtualenv"
     "postgresql"
     "timeshift"
-    "python3.8"
+    "python3.10"
     "authbind"
     "neofetch"
     "cmatrix"
@@ -394,7 +394,6 @@ else
     sudo make install
     cd ..
     rm -rf indicator-sysmonitor
-    indicator-sysmonitor &>/dev/null
 
 fi
 
