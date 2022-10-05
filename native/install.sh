@@ -16,6 +16,7 @@ sudo snap install drawio
 sudo snap install postman
 sudo snap install spotify
 sudo snap install remmina
+sudo snap install brave
 sudo snap install code --classic
 sudo snap install beekeeper-studio
 sudo snap install telegram-desktop
