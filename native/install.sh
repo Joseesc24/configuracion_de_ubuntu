@@ -16,6 +16,7 @@ sudo snap install drawio
 sudo snap install postman
 sudo snap install spotify
 sudo snap install remmina
+sudo snap install brave
 sudo snap install code --classic
 sudo snap install beekeeper-studio
 sudo snap install telegram-desktop
@@ -112,10 +113,11 @@ default_instalations=(
     "gconf2-common"
     "libgconf-2-4"
     "redis-server"
+    "python3-venv"
     "virtualenv"
     "postgresql"
     "timeshift"
-    "python3.8"
+    "python3.10"
     "authbind"
     "neofetch"
     "cmatrix"
@@ -374,6 +376,28 @@ else
     sudo chmod +x /usr/local/bin/docker-compose
 
 fi
+
+quiet_update
+print_title "15/15 - Instalando indicator-sysmonitor"
+
+if command -v indicator-sysmonitor &>/dev/null; then
+
+    print_text "indicator-sysmonitor ya está instalado, no hace falta hacer más cambios"
+
+else
+
+    print_text "indicator-sysmonitor no está instalado, instalandolo"
+
+    quiet_update
+
+    git clone https://github.com/wdbm/indicator-sysmonitor.git
+    cd indicator-sysmonitor
+    sudo make install
+    cd ..
+    rm -rf indicator-sysmonitor
+
+fi
+
 
 sudo $scripts_path/update.sh
 
