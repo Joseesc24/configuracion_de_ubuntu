@@ -105,24 +105,20 @@ default_instalations=(
     "software-properties-common"
     "gir1.2-appindicator3-0.1"
     "numix-icon-theme-circle"
-    "postgresql-contrib"
     "usb-creator-gtk"
     "openjdk-11-jre"
     "openjdk-11-jdk"
     "python3-psutil"
     "gconf2-common"
     "libgconf-2-4"
-    "redis-server"
     "python3-venv"
     "virtualenv"
-    "postgresql"
     "timeshift"
     "python3.10"
     "authbind"
     "neofetch"
     "cmatrix"
     "preload"
-    "sqlite3"
     "baobab"
     "nodejs"
     "deluge"
@@ -266,43 +262,6 @@ for the_package in "${docker_engine_install[@]}"; do
 done
 
 quiet_update
-print_title "09/14 - Instalando llave de MongoDB"
-
-wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add - &>/dev/null
-echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list &>/dev/null
-
-quiet_update
-print_title "10/14 - Instalando paquetes de MongoDB"
-
-mongodb_install=(
-    #    "mongodb-org"
-)
-
-for the_package in "${mongodb_install[@]}"; do
-
-    print_text "Instalando $the_package"
-    print_text "Validando instalación del paquete $the_package"
-
-    if dpkg -s $the_package &>/dev/null; then
-
-        print_text "El paquete $the_package está instalado, no hace falta hacer más cambios"
-
-    else
-
-        print_text "El paquete $the_package no está instalado, instalandolo"
-
-        quiet_update
-
-        sudo apt-get install -y $the_package
-
-    fi
-
-done
-
-sudo systemctl daemon-reload
-#sudo systemctl enable mongod
-
-quiet_update
 print_title "11/14 - Instalando chrome"
 
 if command -v google-chrome-stable &>/dev/null; then
@@ -337,25 +296,6 @@ else
     wget https://github.com/wagoodman/dive/releases/download/v0.9.2/dive_0.9.2_linux_amd64.deb
     sudo apt-get install -y ./dive_0.9.2_linux_amd64.deb
     rm -r dive_0.9.2_linux_amd64.deb
-
-fi
-
-quiet_update
-print_title "13/14 - Instalando MongoDB-compass"
-
-if command -v mongodb-compass &>/dev/null; then
-
-    print_text "compass ya está instalado, no hace falta hacer más cambios"
-
-else
-
-    print_text "compass no está instalado, instalandolo"
-
-    quiet_update
-
-    wget https://downloads.mongodb.com/compass/mongodb-compass_1.26.1_amd64.deb
-    sudo dpkg -i mongodb-compass_1.26.1_amd64.deb
-    rm -r mongodb-compass_1.26.1_amd64.deb
 
 fi
 
