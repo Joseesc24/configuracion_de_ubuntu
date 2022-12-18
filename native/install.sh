@@ -12,13 +12,11 @@ sudo $scripts_path/update.sh
 print_title "01/16 - Instalando programas de snap"
 
 sudo snap install ngrok
-sudo snap install drawio
 sudo snap install postman
 sudo snap install spotify
 sudo snap install remmina
 sudo snap install code --classic
 sudo snap install beekeeper-studio
-sudo snap install telegram-desktop
 
 quiet_update
 print_title "02/16 - Desinstalando paquetes innecesarios"
