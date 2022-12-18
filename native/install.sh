@@ -114,7 +114,6 @@ default_instalations=(
     "python3.10"
     "authbind"
     "neofetch"
-    "cmatrix"
     "preload"
     "baobab"
     "nodejs"
