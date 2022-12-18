@@ -9,20 +9,19 @@ print_title "Iniciando instalaciones"
 
 sudo $scripts_path/update.sh
 
-print_title "01/14 - Instalando programas de snap"
+print_title "01/16 - Instalando programas de snap"
 
 sudo snap install ngrok
 sudo snap install drawio
 sudo snap install postman
 sudo snap install spotify
 sudo snap install remmina
-sudo snap install brave
 sudo snap install code --classic
 sudo snap install beekeeper-studio
 sudo snap install telegram-desktop
 
 quiet_update
-print_title "02/14 - Desinstalando paquetes innecesarios"
+print_title "02/16 - Desinstalando paquetes innecesarios"
 
 sudo snap remove firefox
 
@@ -53,7 +52,7 @@ for the_package in "${uninstall[@]}"; do
 done
 
 quiet_update
-print_title "03/14 - Instalando programas de repositorios externos"
+print_title "03/16 - Instalando programas de repositorios externos"
 
 declare -A ppa_instalations=(
     ["deadsnakes"]="ppa:deadsnakes/ppa"
@@ -99,7 +98,7 @@ for i in "${!ppa_instalations[@]}"; do
 done
 
 quiet_update
-print_title "04/14 - Instalando programas de repositorios por defecto"
+print_title "04/16 - Instalando programas de repositorios por defecto"
 
 default_instalations=(
     "software-properties-common"
@@ -156,7 +155,7 @@ for the_package in "${default_instalations[@]}"; do
 done
 
 quiet_update
-print_title "05/14 - Desinstalando paquetes viejos de docker-engine"
+print_title "05/16 - Desinstalando paquetes viejos de docker-engine"
 
 docker_uninstall=(
     "docker-engine"
@@ -186,7 +185,7 @@ for the_package in "${docker_uninstall[@]}"; do
 done
 
 quiet_update
-print_title "06/14 - Instalando paquetes requisito de docker-engine"
+print_title "06/16 - Instalando paquetes requisito de docker-engine"
 
 docker_install=(
     "apt-transport-https"
@@ -215,7 +214,7 @@ for the_package in "${docker_install[@]}"; do
 done
 
 quiet_update
-print_title "07/14 - Instalando llave GPG de docker-engine"
+print_title "07/16 - Instalando llave GPG de docker-engine"
 
 docker_key=/usr/share/keyrings/docker-archive-keyring.gpg
 
@@ -234,7 +233,7 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o 
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list &>/dev/null
 
 quiet_update
-print_title "08/14 - Instalando paquetes de docker-engine"
+print_title "08/16 - Instalando paquetes de docker-engine"
 
 docker_engine_install=(
     "docker-ce-cli"
@@ -262,7 +261,7 @@ for the_package in "${docker_engine_install[@]}"; do
 done
 
 quiet_update
-print_title "11/14 - Instalando chrome"
+print_title "11/16 - Instalando chrome"
 
 if command -v google-chrome-stable &>/dev/null; then
 
@@ -281,7 +280,7 @@ else
 fi
 
 quiet_update
-print_title "12/14 - Instalando dive"
+print_title "12/16 - Instalando dive"
 
 if command -v dive &>/dev/null; then
 
@@ -299,8 +298,28 @@ else
 
 fi
 
+print_title "14/16 - Instalando MongoDB-compass"
+
+if command -v mongodb-compass &>/dev/null; then
+
+    print_text "compass ya está instalado, no hace falta hacer más cambios"
+
+else
+
+    print_text "compass no está instalado, instalandolo"
+
+    quiet_update
+
+    wget https://downloads.mongodb.com/compass/mongodb-compass_1.26.1_amd64.deb
+    sudo dpkg -i mongodb-compass_1.26.1_amd64.deb
+    rm -r mongodb-compass_1.26.1_amd64.deb
+
+fi
+
 quiet_update
-print_title "14/14 - Instalando docker-compose"
+
+quiet_update
+print_title "15/16 - Instalando docker-compose"
 
 if command -v docker-compose &>/dev/null; then
 
@@ -318,7 +337,7 @@ else
 fi
 
 quiet_update
-print_title "15/15 - Instalando indicator-sysmonitor"
+print_title "16/16 - Instalando indicator-sysmonitor"
 
 if command -v indicator-sysmonitor &>/dev/null; then
 
