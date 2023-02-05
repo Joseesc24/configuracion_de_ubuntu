@@ -9,7 +9,7 @@ print_title "Iniciando instalaciones"
 
 sudo $scripts_path/update.sh
 
-print_title "01/16 - Instalando programas de snap"
+print_title "01/15 - Instalando programas de snap"
 
 sudo snap install ngrok
 sudo snap install postman
@@ -19,7 +19,7 @@ sudo snap install code --classic
 sudo snap install beekeeper-studio
 
 quiet_update
-print_title "02/16 - Desinstalando paquetes innecesarios"
+print_title "02/15 - Desinstalando paquetes innecesarios"
 
 sudo snap remove firefox
 
@@ -50,7 +50,7 @@ for the_package in "${uninstall[@]}"; do
 done
 
 quiet_update
-print_title "03/16 - Instalando programas de repositorios externos"
+print_title "03/15 - Instalando programas de repositorios externos"
 
 declare -A ppa_instalations=(
     ["deadsnakes"]="ppa:deadsnakes/ppa"
@@ -96,7 +96,7 @@ for i in "${!ppa_instalations[@]}"; do
 done
 
 quiet_update
-print_title "04/16 - Instalando programas de repositorios por defecto"
+print_title "04/15 - Instalando programas de repositorios por defecto"
 
 default_instalations=(
     "software-properties-common"
@@ -152,7 +152,7 @@ for the_package in "${default_instalations[@]}"; do
 done
 
 quiet_update
-print_title "05/16 - Desinstalando paquetes viejos de docker-engine"
+print_title "05/15 - Desinstalando paquetes viejos de docker-engine"
 
 docker_uninstall=(
     "docker-engine"
@@ -182,7 +182,7 @@ for the_package in "${docker_uninstall[@]}"; do
 done
 
 quiet_update
-print_title "06/16 - Instalando paquetes requisito de docker-engine"
+print_title "06/15 - Instalando paquetes requisito de docker-engine"
 
 docker_install=(
     "apt-transport-https"
@@ -211,7 +211,7 @@ for the_package in "${docker_install[@]}"; do
 done
 
 quiet_update
-print_title "07/16 - Instalando llave GPG de docker-engine"
+print_title "07/15 - Instalando llave GPG de docker-engine"
 
 docker_key=/usr/share/keyrings/docker-archive-keyring.gpg
 
@@ -230,7 +230,7 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o 
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list &>/dev/null
 
 quiet_update
-print_title "08/16 - Instalando paquetes de docker-engine"
+print_title "08/15 - Instalando paquetes de docker-engine"
 
 docker_engine_install=(
     "docker-ce-cli"
@@ -258,7 +258,7 @@ for the_package in "${docker_engine_install[@]}"; do
 done
 
 quiet_update
-print_title "11/16 - Instalando chrome"
+print_title "09/15 - Instalando chrome"
 
 if command -v google-chrome-stable &>/dev/null; then
 
@@ -277,7 +277,7 @@ else
 fi
 
 quiet_update
-print_title "12/16 - Instalando dive"
+print_title "10/15 - Instalando dive"
 
 if command -v dive &>/dev/null; then
 
@@ -295,7 +295,8 @@ else
 
 fi
 
-print_title "14/16 - Instalando MongoDB-compass"
+quiet_update
+print_title "11/15 - Instalando MongoDB-compass"
 
 if command -v mongodb-compass &>/dev/null; then
 
@@ -314,9 +315,7 @@ else
 fi
 
 quiet_update
-
-quiet_update
-print_title "15/16 - Instalando docker-compose"
+print_title "12/15 - Instalando docker-compose"
 
 if command -v docker-compose &>/dev/null; then
 
@@ -334,7 +333,7 @@ else
 fi
 
 quiet_update
-print_title "16/16 - Instalando indicator-sysmonitor"
+print_title "13/15 - Instalando indicator-sysmonitor"
 
 if command -v indicator-sysmonitor &>/dev/null; then
 
@@ -354,6 +353,41 @@ else
 
 fi
 
+quiet_update
+print_title "14/15 - Instalando poetry"
+
+if command -v poetry &>/dev/null; then
+
+    print_text "poetry ya está instalado, no hace falta hacer más cambios"
+
+else
+
+    print_text "poetry no está instalado, instalandolo"
+
+    quiet_update
+
+    curl -sSL https://install.python-poetry.org | python3 -
+
+fi
+
+quiet_update
+print_title "14/15 - Instalando rust"
+
+if command -v rustup &>/dev/null; then
+
+    print_text "rust ya está instalado, no hace falta hacer más cambios"
+
+else
+
+    print_text "rust no está instalado, instalandolo"
+
+    quiet_update
+
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rustup.sh
+    sh rustup.sh -y
+    rm -rf rustup.sh
+
+fi
 
 sudo $scripts_path/update.sh
 
