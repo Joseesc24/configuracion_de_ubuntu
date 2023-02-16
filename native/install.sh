@@ -15,8 +15,11 @@ sudo snap install ngrok
 sudo snap install postman
 sudo snap install spotify
 sudo snap install remmina
+sudo snap install redisinsight
 sudo snap install code --classic
 sudo snap install beekeeper-studio
+sudo snap install aws-cli --classic
+sudo snap install google-cloud-cli --classic
 
 quiet_update
 print_title "02/15 - Desinstalando paquetes innecesarios"
@@ -383,7 +386,7 @@ else
 
     quiet_update
 
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rustup.sh
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs >rustup.sh
     sh rustup.sh -y
     rm -rf rustup.sh
 
