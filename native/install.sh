@@ -393,7 +393,7 @@ fi
 quiet_update
 print_title "14/16 - Instalando nodejs"
 
-if command -v nodes &>/dev/null; then
+if command -v node &>/dev/null; then
 
     print_text "rust ya está instalado, no hace falta hacer más cambios"
 
