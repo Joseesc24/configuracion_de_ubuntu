@@ -12,6 +12,7 @@ sudo $scripts_path/update.sh
 print_title "01/16 - Instalando programas de snap"
 
 sudo snap install ngrok
+sudo snap install slack
 sudo snap install postman
 sudo snap install spotify
 sudo snap install remmina
