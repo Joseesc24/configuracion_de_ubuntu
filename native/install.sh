@@ -9,21 +9,18 @@ print_title "Iniciando instalaciones"
 
 sudo $scripts_path/update.sh
 
-print_title "01/16 - Instalando programas de snap"
+print_title "01/18 - Instalando programas de snap"
 
 sudo snap install ngrok
 sudo snap install slack
 sudo snap install postman
 sudo snap install spotify
-sudo snap install remmina
 sudo snap install redisinsight
 sudo snap install code --classic
 sudo snap install beekeeper-studio
-sudo snap install aws-cli --classic
-sudo snap install google-cloud-cli --classic
 
 quiet_update
-print_title "02/16 - Desinstalando paquetes innecesarios"
+print_title "02/18 - Desinstalando paquetes innecesarios"
 
 sudo snap remove firefox
 
@@ -54,7 +51,7 @@ for the_package in "${uninstall[@]}"; do
 done
 
 quiet_update
-print_title "03/16 - Instalando programas de repositorios externos"
+print_title "03/18 - Instalando programas de repositorios externos"
 
 declare -A ppa_instalations=(
     ["deadsnakes"]="ppa:deadsnakes/ppa"
@@ -100,14 +97,13 @@ for i in "${!ppa_instalations[@]}"; do
 done
 
 quiet_update
-print_title "04/16 - Instalando programas de repositorios por defecto"
+print_title "04/18 - Instalando programas de repositorios por defecto"
 
 default_instalations=(
     "software-properties-common"
     "gir1.2-appindicator3-0.1"
     "numix-icon-theme-circle"
     "python-is-python3"
-    "python3.11-venv"
     "usb-creator-gtk"
     "openjdk-11-jre"
     "openjdk-11-jdk"
@@ -116,14 +112,10 @@ default_instalations=(
     "libgconf-2-4"
     "virtualenv"
     "timeshift"
-    "python3.11"
     "authbind"
     "neofetch"
     "preload"
-    "baobab"
     "deluge"
-    "neovim"
-    "golang"
     "gnupg"
     "steam"
     "tilix"
@@ -132,7 +124,6 @@ default_instalations=(
     "git"
     "zsh"
     "vim"
-    "vlc"
 )
 
 for the_package in "${default_instalations[@]}"; do
@@ -155,7 +146,7 @@ for the_package in "${default_instalations[@]}"; do
 done
 
 quiet_update
-print_title "05/16 - Desinstalando paquetes viejos de docker-engine"
+print_title "05/18 - Desinstalando paquetes viejos de docker-engine"
 
 docker_uninstall=(
     "docker-engine"
@@ -185,7 +176,7 @@ for the_package in "${docker_uninstall[@]}"; do
 done
 
 quiet_update
-print_title "06/16 - Instalando paquetes requisito de docker-engine"
+print_title "06/18 - Instalando paquetes requisito de docker-engine"
 
 docker_install=(
     "apt-transport-https"
@@ -214,7 +205,7 @@ for the_package in "${docker_install[@]}"; do
 done
 
 quiet_update
-print_title "07/16 - Instalando llave GPG de docker-engine"
+print_title "07/18 - Instalando llave GPG de docker-engine"
 
 docker_key=/usr/share/keyrings/docker-archive-keyring.gpg
 
@@ -233,7 +224,7 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o 
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list &>/dev/null
 
 quiet_update
-print_title "08/16 - Instalando paquetes de docker-engine"
+print_title "08/18 - Instalando paquetes de docker-engine"
 
 docker_engine_install=(
     "docker-ce-cli"
@@ -261,7 +252,7 @@ for the_package in "${docker_engine_install[@]}"; do
 done
 
 quiet_update
-print_title "09/16 - Instalando chrome"
+print_title "09/18 - Instalando chrome"
 
 if command -v google-chrome-stable &>/dev/null; then
 
@@ -280,7 +271,7 @@ else
 fi
 
 quiet_update
-print_title "10/16 - Instalando dive"
+print_title "10/18 - Instalando dive"
 
 if command -v dive &>/dev/null; then
 
@@ -292,14 +283,14 @@ else
 
     quiet_update
 
-    wget https://github.com/wagoodman/dive/releases/download/v0.9.2/dive_0.9.2_linux_amd64.deb
-    sudo apt-get install -y ./dive_0.9.2_linux_amd64.deb
-    rm -r dive_0.9.2_linux_amd64.deb
+    wget https://github.com/wagoodman/dive/releases/download/v0.11.0/dive_0.11.0_linux_amd64.deb
+    sudo apt-get install -y ./dive_0.11.0_linux_amd64.deb
+    rm -r dive_0.11.0_linux_amd64.deb
 
 fi
 
 quiet_update
-print_title "11/16 - Instalando MongoDB-compass"
+print_title "11/18 - Instalando MongoDB-compass"
 
 if command -v mongodb-compass &>/dev/null; then
 
@@ -311,14 +302,14 @@ else
 
     quiet_update
 
-    wget https://downloads.mongodb.com/compass/mongodb-compass_1.26.1_amd64.deb
-    sudo dpkg -i mongodb-compass_1.26.1_amd64.deb
-    rm -r mongodb-compass_1.26.1_amd64.deb
+    wget https://downloads.mongodb.com/compass/mongodb-compass_1.40.2_amd64.deb
+    sudo dpkg -i mongodb-compass_1.40.2_amd64.deb
+    rm -r dpkg -i mongodb-compass_1.40.2_amd64.deb
 
 fi
 
 quiet_update
-print_title "12/16 - Instalando docker-compose"
+print_title "12/18 - Instalando docker-compose"
 
 if command -v docker-compose &>/dev/null; then
 
@@ -336,7 +327,7 @@ else
 fi
 
 quiet_update
-print_title "13/16 - Instalando indicator-sysmonitor"
+print_title "13/18 - Instalando indicator-sysmonitor"
 
 if command -v indicator-sysmonitor &>/dev/null; then
 
@@ -357,7 +348,34 @@ else
 fi
 
 quiet_update
-print_title "14/16 - Instalando poetry"
+print_title "14/18 - Instalando python"
+
+if command -v python &>/dev/null; then
+
+    print_text "python ya está instalado, no hace falta hacer más cambios"
+
+else
+
+    print_text "python no está instalado, instalandolo"
+
+    quiet_update
+
+    mkdir python
+    cd python
+    sudo apt install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget
+    quiet_update
+    wget https://www.python.org/ftp/python/3.12.0/Python-3.12.0.tar.xz
+    sudo tar -xvf Python-3.12.0.tar.xz
+    cd Python-3.12.0
+    sudo make altinstall
+    cd ..
+    cd ..
+    sudo rm -r python
+
+fi
+
+quiet_update
+print_title "15/18 - Instalando poetry"
 
 if command -v poetry &>/dev/null; then
 
@@ -374,7 +392,7 @@ else
 fi
 
 quiet_update
-print_title "14/16 - Instalando rust"
+print_title "16/18 - Instalando rust"
 
 if command -v rustup &>/dev/null; then
 
@@ -393,26 +411,50 @@ else
 fi
 
 quiet_update
-print_title "14/16 - Instalando nodejs"
+print_title "17/18 - Instalando nodejs"
 
 if command -v node &>/dev/null; then
 
-    print_text "rust ya está instalado, no hace falta hacer más cambios"
+    print_text "nodejs ya está instalado, no hace falta hacer más cambios"
 
 else
 
-    print_text "rust no está instalado, instalandolo"
+    print_text "nodejs no está instalado, instalandolo"
 
     quiet_update
 
     mkdir node
     cd node
-    wget https://nodejs.org/dist/v18.15.0/node-v18.15.0-linux-x64.tar.xz
-    sudo tar -xvf node-v18.15.0-linux-x64.tar.xz
-    sudo cp -r node-v18.15.0-linux-x64/{bin,include,lib,share} /usr/
-    export PATH=/usr/node-v18.15.0-linux-x64/bin:$PATH
+    wget https://nodejs.org/dist/v20.8.0/node-v20.8.0-linux-x64.tar.xz
+    sudo tar -xvf node-v20.8.0-linux-x64.tar.xz
+    sudo cp -r node-v20.8.0-linux-x64/{bin,include,lib,share} /usr/
+    export PATH=/usr/node-v20.8.0-linux-x64/bin:$PATH
     cd ..
     rm -r node
+
+fi
+
+quiet_update
+print_title "18/18 - Instalando go"
+
+if command -v go &>/dev/null; then
+
+    print_text "go ya está instalado, no hace falta hacer más cambios"
+
+else
+
+    print_text "go no está instalado, instalandolo"
+
+    quiet_update
+
+    mkdir golang
+    cd golang
+    wget https://go.dev/dl/go1.21.1.linux-amd64.tar.gz
+    rm -rf /usr/local/go
+    sudo tar -C /usr/local -xzf go1.21.1.linux-amd64.tar.gz
+    export PATH=$PATH:/usr/local/go/bin
+    cd ..
+    rm -r golang
 
 fi
 
