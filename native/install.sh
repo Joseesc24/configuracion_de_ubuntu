@@ -115,7 +115,6 @@ default_instalations=(
     "authbind"
     "neofetch"
     "preload"
-    "deluge"
     "gnupg"
     "steam"
     "tilix"
@@ -350,13 +349,13 @@ fi
 quiet_update
 print_title "14/18 - Instalando python"
 
-if command -v python &>/dev/null; then
+if command -v python3.12 &>/dev/null; then
 
-    print_text "python ya está instalado, no hace falta hacer más cambios"
+    print_text "python3.12 ya está instalado, no hace falta hacer más cambios"
 
 else
 
-    print_text "python no está instalado, instalandolo"
+    print_text "python3.12 no está instalado, instalandolo"
 
     quiet_update
 
@@ -367,6 +366,7 @@ else
     wget https://www.python.org/ftp/python/3.12.0/Python-3.12.0.tar.xz
     sudo tar -xvf Python-3.12.0.tar.xz
     cd Python-3.12.0
+    sudo ./configure --enable-optimizations
     sudo make altinstall
     cd ..
     cd ..
@@ -406,7 +406,7 @@ else
 
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs >rustup.sh
     sh rustup.sh -y
-    rm -rf rustup.sh
+    sudo rm -rf rustup.sh
 
 fi
 
@@ -428,9 +428,9 @@ else
     wget https://nodejs.org/dist/v20.8.0/node-v20.8.0-linux-x64.tar.xz
     sudo tar -xvf node-v20.8.0-linux-x64.tar.xz
     sudo cp -r node-v20.8.0-linux-x64/{bin,include,lib,share} /usr/
-    export PATH=/usr/node-v20.8.0-linux-x64/bin:$PATH
+    sudo export PATH=/usr/node-v20.8.0-linux-x64/bin:$PATH
     cd ..
-    rm -r node
+    sudo rm -r node
 
 fi
 
@@ -452,7 +452,7 @@ else
     wget https://go.dev/dl/go1.21.1.linux-amd64.tar.gz
     rm -rf /usr/local/go
     sudo tar -C /usr/local -xzf go1.21.1.linux-amd64.tar.gz
-    export PATH=$PATH:/usr/local/go/bin
+    sudo export PATH=$PATH:/usr/local/go/bin
     cd ..
     rm -r golang
 
