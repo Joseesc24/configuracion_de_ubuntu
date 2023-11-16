@@ -303,7 +303,7 @@ else
 
     wget https://downloads.mongodb.com/compass/mongodb-compass_1.40.2_amd64.deb
     sudo dpkg -i mongodb-compass_1.40.2_amd64.deb
-    rm -r dpkg -i mongodb-compass_1.40.2_amd64.deb
+    rm -r mongodb-compass_1.40.2_amd64.deb
 
 fi
 
@@ -388,6 +388,7 @@ else
     quiet_update
 
     curl -sSL https://install.python-poetry.org | python3 -
+    export PATH="/home/jose/.local/bin:$PATH
 
 fi
 
@@ -407,6 +408,7 @@ else
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs >rustup.sh
     sh rustup.sh -y
     sudo rm -rf rustup.sh
+    source "$HOME/.cargo/env"
 
 fi
 
@@ -428,11 +430,6 @@ else
     wget https://nodejs.org/dist/v20.8.0/node-v20.8.0-linux-x64.tar.xz
     sudo tar -xvf node-v20.8.0-linux-x64.tar.xz
     sudo cp -r node-v20.8.0-linux-x64/{bin,include,lib,share} /usr/
-    export PATH=/usr/node-v20.8.0-linux-x64/bin:$PATH
-    echo "export PATH=/usr/node-v20.8.0-linux-x64/bin:$PATH" | tee -a ~/.bashrc
-    source ~/.bashrc
-    echo "export PATH=/usr/local/go/bin:$PATH" | tee -a ~/.zshrc
-    source ~/.zshrc
     cd ..
     sudo rm -r node
 
@@ -456,15 +453,13 @@ else
     wget https://go.dev/dl/go1.21.1.linux-amd64.tar.gz
     rm -rf /usr/local/go
     sudo tar -C /usr/local -xzf go1.21.1.linux-amd64.tar.gz
-    export PATH=/usr/local/go/bin:$PATH
-    echo "export PATH=/usr/local/go/bin:$PATH" | tee -a ~/.bashrc
-    source ~/.bashrc
-    echo "export PATH=/usr/local/go/bin:$PATH" | tee -a ~/.zshrc
-    source ~/.zshrc
     cd ..
     rm -r golang
 
 fi
+
+echo "export PATH=/usr/node-v20.8.0-linux-x64/bin:/usr/local/go/bin:$PATH" | tee -a ~/.bashrc
+source ~/.bashrc
 
 sudo $scripts_path/update.sh
 
