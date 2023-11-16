@@ -428,7 +428,8 @@ else
     wget https://nodejs.org/dist/v20.8.0/node-v20.8.0-linux-x64.tar.xz
     sudo tar -xvf node-v20.8.0-linux-x64.tar.xz
     sudo cp -r node-v20.8.0-linux-x64/{bin,include,lib,share} /usr/
-    sudo export PATH=/usr/node-v20.8.0-linux-x64/bin:$PATH
+    sudo echo "export PATH=/usr/node-v20.8.0-linux-x64/bin:$PATH" | tee ~/.bashrc
+    source ~/.bashrc
     cd ..
     sudo rm -r node
 
@@ -452,7 +453,8 @@ else
     wget https://go.dev/dl/go1.21.1.linux-amd64.tar.gz
     rm -rf /usr/local/go
     sudo tar -C /usr/local -xzf go1.21.1.linux-amd64.tar.gz
-    sudo export PATH=$PATH:/usr/local/go/bin
+    sudo echo "export PATH=/usr/local/go/bin:$PATH" | tee ~/.bashrc
+    source ~/.bashrc
     cd ..
     rm -r golang
 
