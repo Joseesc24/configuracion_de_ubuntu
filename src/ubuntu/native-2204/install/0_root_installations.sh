@@ -12,7 +12,6 @@ sudo $scripts_path/update.sh
 print_title "01/18 - Instalando programas de snap"
 
 sudo snap install ngrok
-sudo snap install slack
 sudo snap install postman
 sudo snap install spotify
 sudo snap install redisinsight
@@ -24,84 +23,11 @@ print_title "02/18 - Desinstalando paquetes innecesarios"
 
 sudo snap remove firefox
 
-uninstall=(
-    "gnome-power-manager"
-    "gnome-characters"
-    "gnome-calculator"
-    "imagemagick"
-)
-
-for the_package in "${uninstall[@]}"; do
-
-    print_text "Eliminando $the_package"
-    print_text "Validando instalación del paquete $the_package"
-
-    if dpkg -s $the_package &>/dev/null; then
-
-        print_text "El paquete $the_package está instalado, eliminando el paquete"
-
-        sudo apt purge -y $the_package
-
-    else
-
-        print_text "El paquete $the_package no está instalado, no hace falta hacer más cambios"
-
-    fi
-
-done
-
-quiet_update
-print_title "03/18 - Instalando programas de repositorios externos"
-
-declare -A ppa_instalations=(
-    ["deadsnakes"]="ppa:deadsnakes/ppa"
-)
-
-for i in "${!ppa_instalations[@]}"; do
-
-    the_package=$i
-    the_ppa=${ppa_instalations[$i]}
-
-    print_text "Instalando $the_package"
-    print_text "Validando instalación del paquete $the_package"
-
-    if ! grep -q "^deb .*$the_ppa" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
-
-        print_text "El paquete $the_package está instalado, no hace falta hacer más cambios"
-
-    else
-
-        print_text "El paquete $the_package no está instalado, instalandolo"
-        print_text "Validando instalación del repositorio $the_ppa"
-
-        if ! grep -q "^deb .*$the_ppa" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
-
-            print_text "El repositorio $the_ppa no está agregado al sistema de repositorios, agregandolo"
-
-            quiet_update
-            sudo add-apt-repository -y $the_ppa
-
-        else
-
-            print_text "El repositorio $the_ppa ya esta agregado al sistema de repositorios"
-
-        fi
-
-        print_text "Instalando $the_package"
-
-        quiet_update
-        sudo apt-get install -y $the_package
-
-    fi
-
-done
-
 quiet_update
 print_title "04/18 - Instalando programas de repositorios por defecto"
 
 default_instalations=(
     "software-properties-common"
-    "gir1.2-appindicator3-0.1"
     "numix-icon-theme-circle"
     "python-is-python3"
     "usb-creator-gtk"
@@ -116,13 +42,9 @@ default_instalations=(
     "neofetch"
     "preload"
     "gnupg"
-    "steam"
-    "tilix"
     "tree"
-    "htop"
     "git"
     "zsh"
-    "vim"
 )
 
 for the_package in "${default_instalations[@]}"; do
@@ -270,25 +192,6 @@ else
 fi
 
 quiet_update
-print_title "10/18 - Instalando dive"
-
-if command -v dive &>/dev/null; then
-
-    print_text "dive ya está instalado, no hace falta hacer más cambios"
-
-else
-
-    print_text "dive no está instalado, instalandolo"
-
-    quiet_update
-
-    wget https://github.com/wagoodman/dive/releases/download/v0.11.0/dive_0.11.0_linux_amd64.deb
-    sudo apt-get install -y ./dive_0.11.0_linux_amd64.deb
-    rm -r dive_0.11.0_linux_amd64.deb
-
-fi
-
-quiet_update
 print_title "11/18 - Instalando MongoDB-compass"
 
 if command -v mongodb-compass &>/dev/null; then
@@ -322,27 +225,6 @@ else
 
     sudo curl -L "https://github.com/docker/compose/releases/download/1.28.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
-
-fi
-
-quiet_update
-print_title "13/18 - Instalando indicator-sysmonitor"
-
-if command -v indicator-sysmonitor &>/dev/null; then
-
-    print_text "indicator-sysmonitor ya está instalado, no hace falta hacer más cambios"
-
-else
-
-    print_text "indicator-sysmonitor no está instalado, instalandolo"
-
-    quiet_update
-
-    git clone https://github.com/wdbm/indicator-sysmonitor.git
-    cd indicator-sysmonitor
-    sudo make install
-    cd ..
-    rm -rf indicator-sysmonitor
 
 fi
 
