@@ -7,7 +7,7 @@ remove_and_ask_password
 
 print_title "Iniciando instalaciones"
 
-sudo $scripts_path/update.sh
+sudo $scripts_path/../sidecar/update.sh
 
 quiet_update
 print_title "05/18 - Desinstalando paquetes viejos de docker-engine"

@@ -7,7 +7,7 @@ remove_and_ask_password
 
 print_title "Iniciando instalaciones"
 
-sudo $scripts_path/update.sh
+sudo $scripts_path/../sidecar/update.sh
 
 print_title "01/05 - Instalando programas de snap"
 
