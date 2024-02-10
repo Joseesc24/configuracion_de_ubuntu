@@ -1,8 +1,9 @@
 #!/bin/bash
 
 scripts_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
-backups_path=$scripts_path/backups
-source $scripts_path/commons.sh
+source $scripts_path/../sidecar/commons.sh
+backup_path=$scripts_path/../backup
+tar_path=$scripts_path/../
 
 home=$HOME
 user=$USER
@@ -76,13 +77,13 @@ print_title "Iniciando Respaldo De Configuraciones Personalizadas"
 
 print_title "01/06 - Respaldando Configuraciones De Fuentes Personalizadas"
 
-ruta_backup_fuentes=$backups_path/fuentes
+ruta_backup_fuentes=$backup_path/fuentes
 ruta_origen_fuentes=$home/.fonts
 copiar_revisando_origen_y_destino $ruta_origen_fuentes $ruta_backup_fuentes
 
 print_title "02/06 - Respaldando Configuraciones De Terminal"
 
-ruta_terminal=$backups_path/terminal
+ruta_terminal=$backup_path/terminal
 crear_directorio_si_no_existe $ruta_terminal
 archivo_terminal=$ruta_terminal/gnome-terminal.dconf
 crear_archivo_si_no_existe $archivo_terminal
@@ -90,7 +91,7 @@ dconf dump /org/gnome/terminal/legacy/profiles:/ >$archivo_terminal
 
 print_title "03/06 - Respaldando Configuraciones De Tilix"
 
-ruta_tilix=$backups_path/tilix
+ruta_tilix=$backup_path/tilix
 crear_directorio_si_no_existe $ruta_tilix
 archivo_tilix=$ruta_tilix/tilix.dconf
 crear_archivo_si_no_existe $archivo_tilix
@@ -98,7 +99,7 @@ dconf dump /com/gexperts/Tilix/ >$archivo_tilix
 
 print_title "04/06 - Respaldando Configuraciones De Iconos De Snap"
 
-ruta_backup_snap=$backups_path/snap
+ruta_backup_snap=$backup_path/snap
 ruta_origen_snap=/var/lib/snapd/desktop/applications/
 copiar_revisando_origen_y_destino $ruta_origen_snap $ruta_backup_snap
 sleep 2
@@ -106,7 +107,7 @@ sudo find $ruta_backup_snap -type f -exec chmod 777 {} \;
 
 print_title "05/06 - Respaldando Configuraciones De Zsh"
 
-ruta_backup_zsh=$backups_path/zsh
+ruta_backup_zsh=$backup_path/zsh
 rute_origen_zsh_1=$home/.p10k.zsh
 rute_origen_zsh_2=$home/.zshrc
 copiar_revisando_origen_y_destino $rute_origen_zsh_1 $ruta_backup_zsh
@@ -114,17 +115,17 @@ copiar_revisando_origen_y_destino $rute_origen_zsh_2 $ruta_backup_zsh
 
 print_title "06/06 - Comprimiendo Resplado En Un Archivo Tar"
 
-cd $scripts_path
+cd $tar_path
 
-if test -f backups.tar.gz; then
+if test -f backup.tar.gz; then
     print_text "borrando respaldo anterior"
-    rm -r backups.tar.gz
+    rm -r backup.tar.gz
 fi
 
 print_text "creando respaldo nuevo"
 
-tar -zcvf backups.tar.gz backups
-rm -r backups
+tar -zcvf backup.tar.gz backup
+rm -r backup
 
 print_text "respaldo creado"
 

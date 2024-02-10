@@ -1,8 +1,9 @@
 #!/bin/bash
 
 scripts_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
-backups_path=$scripts_path/backups
-source $scripts_path/commons.sh
+source $scripts_path/../sidecar/commons.sh
+backup_path=$scripts_path/../backup
+tar_path=$scripts_path/../
 
 home=$HOME
 user=$USER
@@ -23,6 +24,7 @@ crear_directorio_si_no_existe() {
         mkdir -p $1
 
     fi
+
 }
 
 sustituir_revisando_origen_y_destino() {
@@ -58,13 +60,13 @@ print_title "Iniciando Restauración De Configuraciones Personalizadas"
 
 print_title "01/09 - Descomprimiendo Directorio De Respaldos"
 
-cd $scripts_path
+cd $tar_path
 
-if test -f backups.tar.gz; then
+if test -f backup.tar.gz; then
 
     print_text "respaldo encontrado"
 
-    tar xzf backups.tar.gz backups
+    tar xzf backup.tar.gz backup
 
 else
 
@@ -77,26 +79,26 @@ fi
 
 print_title "02/09 - Restaurando Configuraciones De Fuentes Personalizadas"
 
-ruta_backup_fuentes=$backups_path/fuentes
+ruta_backup_fuentes=$backup_path/fuentes
 ruta_origen_fuentes=$home/.fonts
 sustituir_revisando_origen_y_destino $ruta_backup_fuentes $ruta_origen_fuentes
 
 print_title "03/09 - Restaurando Configuraciones De Terminal"
 
-ruta_terminal=$backups_path/terminal
+ruta_terminal=$backup_path/terminal
 archivo_terminal=$ruta_terminal/gnome-terminal.dconf
 dconf load /org/gnome/terminal/legacy/profiles:/ <$archivo_terminal
 
 print_title "04/09 - Restaurando Configuraciones De Tilix"
 
-ruta_tilix=$backups_path/tilix
+ruta_tilix=$backup_path/tilix
 archivo_tilix=$ruta_tilix/tilix.dconf
 dconf load /com/gexperts/Tilix/ <$archivo_tilix
 sudo update-alternatives --set x-terminal-emulator /usr/bin/tilix.wrapper
 
 print_title "05/09 - Restaurando Configuraciones De Iconos De Snap"
 
-ruta_backup_snap=$backups_path/snap
+ruta_backup_snap=$backup_path/snap
 ruta_origen_snap=/var/lib/snapd/desktop/applications/
 sudo find $ruta_origen_snap -type f -exec chmod 777 {} \;
 sleep 2
@@ -106,8 +108,8 @@ sudo find $ruta_origen_snap -type f -exec chmod 755 {} \;
 
 print_title "06/09 - Restaurando Configuraciones De Zsh Y P10k"
 
-ruta_backup_zsh_1=$backups_path/zsh/.p10k.zsh
-ruta_backup_zsh_2=$backups_path/zsh/.zshrc
+ruta_backup_zsh_1=$backup_path/zsh/.p10k.zsh
+ruta_backup_zsh_2=$backup_path/zsh/.zshrc
 rute_origen_zsh=$home
 sustituir_revisando_origen_y_destino $ruta_backup_zsh_1 $rute_origen_zsh
 sustituir_revisando_origen_y_destino $ruta_backup_zsh_2 $rute_origen_zsh
@@ -144,7 +146,7 @@ fi
 
 print_title "09/09 - Eliminando Directorio De Respaldos"
 
-rm -r backups
+rm -r backup
 print_text "directorio de respaldos removido"
 
 print_title "Restauraciones De Configuraciones Personalizadas Finalizadas"
