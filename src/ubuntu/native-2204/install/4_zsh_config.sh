@@ -65,4 +65,7 @@ else
     git clone --depth=1 https://github.com/romkatv/powerlevel10k $folder_path
 fi
 
+echo "exec zsh" | tee -a ~/.bashrc
+source ~/.bashrc
+
 print_title "Istalación Y Configuración De Zsh Finalizada, Reinicie Su Terminal"

@@ -28,7 +28,7 @@ else
     sudo make altinstall
     cd ..
     cd ..
-    rm -r python
+    sudo rm -r python
 fi
 
 quiet_update

@@ -64,13 +64,6 @@ ruta_terminal=$backup_path/terminal
 archivo_terminal=$ruta_terminal/gnome-terminal.dconf
 dconf load /org/gnome/terminal/legacy/profiles:/ <$archivo_terminal
 
-print_title "04/09 - Restaurando Configuraciones De Tilix"
-
-ruta_tilix=$backup_path/tilix
-archivo_tilix=$ruta_tilix/tilix.dconf
-dconf load /com/gexperts/Tilix/ <$archivo_tilix
-sudo update-alternatives --set x-terminal-emulator /usr/bin/tilix.wrapper
-
 print_title "05/09 - Restaurando Configuraciones De Iconos De Snap"
 
 ruta_backup_snap=$backup_path/snap
