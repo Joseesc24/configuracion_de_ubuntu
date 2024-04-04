@@ -17,6 +17,7 @@ sudo snap install spotify
 sudo snap install redisinsight
 sudo snap install code --classic
 sudo snap install beekeeper-studio
+sudo snap install kubectl --classic
 
 quiet_update
 print_title "02/05 - Desinstalando programas de snap"
@@ -81,6 +82,18 @@ else
     quiet_update
     wget https://downloads.mongodb.com/compass/mongodb-compass_1.42.0_amd64.deb
     sudo dpkg -i mongodb-compass_1.42.0_amd64.deb
+    rm -r mongodb-compass_1.42.0_amd64.deb
+fi
+
+quiet_update
+print_title "05/05 - Instalando MongoDB-compass"
+
+if command -v k3s &>/dev/null; then
+    print_text "compass ya está instalado, no hace falta hacer más cambios"
+else
+    print_text "compass no está instalado, instalandolo"
+    quiet_update
+    curl -sfL https://get.k3s.io | sh -
     rm -r mongodb-compass_1.42.0_amd64.deb
 fi
 
