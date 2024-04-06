@@ -8,3 +8,6 @@
 
 # backup folders
 backup
+
+# node dependencies folder
+node_modules/

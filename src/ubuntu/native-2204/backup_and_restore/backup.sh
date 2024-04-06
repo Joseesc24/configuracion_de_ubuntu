@@ -1,6 +1,6 @@
 #!/bin/bash
 
-scripts_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+scripts_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
 source $scripts_path/../sidecar/commons.sh
 backup_path=$scripts_path/../backup
 tar_path=$scripts_path/../
@@ -11,40 +11,40 @@ user=$USER
 remove_and_ask_password
 
 crear_directorio_si_no_existe() {
-    if test -d $1; then
-        print_text "el directorio $1 ya existe"
-    else
-        print_text "el directorio $1 no existe"
-        print_text "creando el directorio $1"
-        mkdir -p $1
-    fi
+	if test -d $1; then
+		print_text "el directorio $1 ya existe"
+	else
+		print_text "el directorio $1 no existe"
+		print_text "creando el directorio $1"
+		mkdir -p $1
+	fi
 }
 
 crear_archivo_si_no_existe() {
-    if test -f $1; then
-        print_text "el archivo $1 ya existe"
-    else
-        print_text "el archivo $1 no existe"
-        print_text "creando el archivo $1"
-        touch $1
-    fi
+	if test -f $1; then
+		print_text "el archivo $1 ya existe"
+	else
+		print_text "el archivo $1 no existe"
+		print_text "creando el archivo $1"
+		touch $1
+	fi
 }
 
 copiar_revisando_origen_y_destino() {
-    ruta_origen=$1
-    ruta_destino=$2
-    crear_directorio_si_no_existe $ruta_destino
-    if test -f $ruta_origen; then
-        print_text "la ruta $ruta_origen es de un archivo"
-        print_text "copiando el archivo de la ruta $ruta_origen a la ruta $ruta_destino"
-        cp -r $ruta_origen $ruta_destino
-    elif test -d $ruta_origen; then
-        print_text "la ruta $ruta_origen es de un directorio"
-        print_text "copiando el contenido de la ruta $ruta_origen a la ruta $ruta_destino"
-        cp -r $ruta_origen/* $ruta_destino
-    else
-        print_text "la ruta de origen $ruta_origen no existe"
-    fi
+	ruta_origen=$1
+	ruta_destino=$2
+	crear_directorio_si_no_existe $ruta_destino
+	if test -f $ruta_origen; then
+		print_text "la ruta $ruta_origen es de un archivo"
+		print_text "copiando el archivo de la ruta $ruta_origen a la ruta $ruta_destino"
+		cp -r $ruta_origen $ruta_destino
+	elif test -d $ruta_origen; then
+		print_text "la ruta $ruta_origen es de un directorio"
+		print_text "copiando el contenido de la ruta $ruta_origen a la ruta $ruta_destino"
+		cp -r $ruta_origen/* $ruta_destino
+	else
+		print_text "la ruta de origen $ruta_origen no existe"
+	fi
 }
 
 print_title "Iniciando Respaldo De Configuraciones Personalizadas"
@@ -61,7 +61,7 @@ ruta_terminal=$backup_path/terminal
 crear_directorio_si_no_existe $ruta_terminal
 archivo_terminal=$ruta_terminal/gnome-terminal.dconf
 crear_archivo_si_no_existe $archivo_terminal
-dconf dump /org/gnome/terminal/legacy/profiles:/ >$archivo_terminal
+dconf dump /org/gnome/terminal/legacy/profiles:/ > $archivo_terminal
 
 print_title "03/05 - Respaldando Configuraciones De Iconos De Snap"
 
@@ -84,8 +84,8 @@ print_title "05/05 - Comprimiendo Resplado En Un Archivo Tar"
 cd $tar_path
 
 if test -f backup.tar.gz; then
-    print_text "borrando respaldo anterior"
-    rm -r backup.tar.gz
+	print_text "borrando respaldo anterior"
+	rm -r backup.tar.gz
 fi
 
 print_text "creando respaldo nuevo"

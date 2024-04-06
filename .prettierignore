@@ -1,0 +1,8 @@
+# ** info: ignored files
+package-lock.json
+
+# ** info: ignored file types
+*postman_collection.json
+
+# ** info: ignored directories
+.husky/_/*

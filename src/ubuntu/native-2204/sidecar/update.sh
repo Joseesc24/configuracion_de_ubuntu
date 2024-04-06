@@ -1,6 +1,6 @@
 #!/bin/bash
 
-scripts_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+scripts_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
 source $scripts_path/../sidecar/commons.sh
 
 home=$HOME

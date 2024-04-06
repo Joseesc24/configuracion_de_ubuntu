@@ -1,0 +1,41 @@
+{
+	"name": "scripts_configuracion",
+	"version": "v1.0.0",
+	"description": "Este repositorio simplemente contiene una pequeña colección de scripts que suelo usar para actualizar ubuntu y para limpiar docker en wsl2.",
+	"author": {
+		"email": "josed.escobar@outlook.com",
+		"name": "joseesco24"
+	},
+	"readme": "readme.md",
+	"scripts": {
+		"format": "prettier \"./**/*.sh|.md|.json|.gitignore|.prettierignore\" --write",
+		"commitmsg": "bash ./.husky/commit-msg.sh",
+		"precommit": "bash ./.husky/pre-commit.sh",
+		"postinstall": "npx husky install"
+	},
+	"prettier": {
+		"plugins": [
+			"prettier-plugin-sh"
+		],
+		"trailingComma": "es5",
+		"useTabs": true,
+		"semi": false,
+		"singleQuote": false,
+		"proseWrap": "preserve",
+		"quoteProps": "consistent",
+		"bracketSpacing": false,
+		"bracketSameLine": false,
+		"arrowParens": "always",
+		"insertPragma": false,
+		"endOfLine": "lf",
+		"printWidth": 180,
+		"rangeStart": 0
+	},
+	"devDependencies": {
+		"@commitlint/cli": "^19.2.1",
+		"@commitlint/config-conventional": "^19.1.0",
+		"husky": "^9.0.11",
+		"prettier": "^3.2.5",
+		"prettier-plugin-sh": "^0.14.0"
+	}
+}
