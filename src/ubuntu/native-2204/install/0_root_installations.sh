@@ -44,6 +44,7 @@ default_instalations=(
 	"preload"
 	"gnupg"
 	"tree"
+	"curl"
 	"git"
 	"zsh"
 )
@@ -94,7 +95,6 @@ else
 	print_text "K3S no está instalado, instalandolo"
 	quiet_update
 	curl -sfL https://get.k3s.io | sh -
-	rm -r mongodb-compass_1.42.0_amd64.deb
 fi
 
 quiet_update
