@@ -38,6 +38,7 @@ default_instalations=(
 	"gconf2-common"
 	"libgconf-2-4"
 	"virtualenv"
+	"net-tools"
 	"timeshift"
 	"authbind"
 	"neofetch"
@@ -45,6 +46,7 @@ default_instalations=(
 	"gnupg"
 	"tree"
 	"curl"
+	"nmap"
 	"git"
 	"zsh"
 )
