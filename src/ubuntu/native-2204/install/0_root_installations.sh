@@ -43,6 +43,7 @@ default_instalations=(
 	"authbind"
 	"neofetch"
 	"preload"
+	"nikto"
 	"gnupg"
 	"tree"
 	"curl"
