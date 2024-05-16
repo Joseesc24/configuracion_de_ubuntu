@@ -39,7 +39,7 @@ sustituir_revisando_origen_y_destino() {
 
 print_title "Iniciando Restauración De Configuraciones Personalizadas"
 
-print_title "01/09 - Descomprimiendo Directorio De Respaldos"
+print_title "01/05 - Descomprimiendo Directorio De Respaldos"
 
 cd $tar_path
 
@@ -52,29 +52,13 @@ else
 	exit 1
 fi
 
-print_title "02/09 - Restaurando Configuraciones De Fuentes Personalizadas"
+print_title "02/05 - Restaurando Configuraciones De Fuentes Personalizadas"
 
 ruta_backup_fuentes=$backup_path/fuentes
 ruta_origen_fuentes=$home/.fonts
 sustituir_revisando_origen_y_destino $ruta_backup_fuentes $ruta_origen_fuentes
 
-print_title "03/09 - Restaurando Configuraciones De Terminal"
-
-ruta_terminal=$backup_path/terminal
-archivo_terminal=$ruta_terminal/gnome-terminal.dconf
-dconf load /org/gnome/terminal/legacy/profiles:/ < $archivo_terminal
-
-print_title "05/09 - Restaurando Configuraciones De Iconos De Snap"
-
-ruta_backup_snap=$backup_path/snap
-ruta_origen_snap=/var/lib/snapd/desktop/applications/
-sudo find $ruta_origen_snap -type f -exec chmod 777 {} \;
-sleep 2
-sustituir_revisando_origen_y_destino $ruta_backup_snap $ruta_origen_snap
-sleep 2
-sudo find $ruta_origen_snap -type f -exec chmod 755 {} \;
-
-print_title "06/09 - Restaurando Configuraciones De Zsh Y P10k"
+print_title "03/05 - Restaurando Configuraciones De Zsh Y P10k"
 
 ruta_backup_zsh_1=$backup_path/zsh/.p10k.zsh
 ruta_backup_zsh_2=$backup_path/zsh/.zshrc
@@ -82,11 +66,7 @@ rute_origen_zsh=$home
 sustituir_revisando_origen_y_destino $ruta_backup_zsh_1 $rute_origen_zsh
 sustituir_revisando_origen_y_destino $ruta_backup_zsh_2 $rute_origen_zsh
 
-print_title "07/09 - Restaurando Configuraciones De Iconos Con Numix"
-
-gsettings set org.gnome.desktop.interface icon-theme 'Numix-Circle'
-
-print_title "08/09 - Restaurando Configuraciones De Docker Engine"
+print_title "04/05 - Restaurando Configuraciones De Docker Engine"
 
 if grep -q docker /etc/group; then
 	print_text "el grupo docker ya existe, no hace falta hacer más cambios"
@@ -102,7 +82,7 @@ else
 	sudo adduser $user docker
 fi
 
-print_title "09/09 - Eliminando Directorio De Respaldos"
+print_title "05/05 - Eliminando Directorio De Respaldos"
 
 rm -r backup
 print_text "directorio de respaldos removido"

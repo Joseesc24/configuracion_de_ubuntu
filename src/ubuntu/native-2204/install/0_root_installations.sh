@@ -29,27 +29,19 @@ print_title "03/07 - Instalando programas de repositorios por defecto"
 
 default_instalations=(
 	"software-properties-common"
-	"numix-icon-theme-circle"
-	"python-is-python3"
 	"usb-creator-gtk"
-	"openjdk-11-jre"
-	"openjdk-11-jdk"
-	"python3-psutil"
-	"gconf2-common"
-	"libgconf-2-4"
-	"virtualenv"
 	"net-tools"
 	"timeshift"
-	"authbind"
 	"neofetch"
 	"preload"
-	"nikto"
-	"gnupg"
+	"unrar"
 	"tree"
 	"curl"
 	"nmap"
+	"wget"
 	"git"
 	"zsh"
+	"rar"
 )
 
 for the_package in "${default_instalations[@]}"; do
@@ -84,9 +76,9 @@ if command -v mongodb-compass &> /dev/null; then
 else
 	print_text "compass no está instalado, instalandolo"
 	quiet_update
-	wget https://downloads.mongodb.com/compass/mongodb-compass_1.42.0_amd64.deb
-	sudo dpkg -i mongodb-compass_1.42.0_amd64.deb
-	rm -r mongodb-compass_1.42.0_amd64.deb
+	wget https://downloads.mongodb.com/compass/mongodb-compass_1.43.0_amd64.deb
+	sudo dpkg -i mongodb-compass_1.43.0_amd64.deb
+	rm -r mongodb-compass_1.43.0_amd64.deb
 fi
 
 quiet_update

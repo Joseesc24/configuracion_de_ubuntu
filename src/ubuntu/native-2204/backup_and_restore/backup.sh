@@ -20,16 +20,6 @@ crear_directorio_si_no_existe() {
 	fi
 }
 
-crear_archivo_si_no_existe() {
-	if test -f $1; then
-		print_text "el archivo $1 ya existe"
-	else
-		print_text "el archivo $1 no existe"
-		print_text "creando el archivo $1"
-		touch $1
-	fi
-}
-
 copiar_revisando_origen_y_destino() {
 	ruta_origen=$1
 	ruta_destino=$2
@@ -54,22 +44,6 @@ print_title "01/05 - Respaldando Configuraciones De Fuentes Personalizadas"
 ruta_backup_fuentes=$backup_path/fuentes
 ruta_origen_fuentes=$home/.fonts
 copiar_revisando_origen_y_destino $ruta_origen_fuentes $ruta_backup_fuentes
-
-print_title "02/05 - Respaldando Configuraciones De Terminal"
-
-ruta_terminal=$backup_path/terminal
-crear_directorio_si_no_existe $ruta_terminal
-archivo_terminal=$ruta_terminal/gnome-terminal.dconf
-crear_archivo_si_no_existe $archivo_terminal
-dconf dump /org/gnome/terminal/legacy/profiles:/ > $archivo_terminal
-
-print_title "03/05 - Respaldando Configuraciones De Iconos De Snap"
-
-ruta_backup_snap=$backup_path/snap
-ruta_origen_snap=/var/lib/snapd/desktop/applications/
-copiar_revisando_origen_y_destino $ruta_origen_snap $ruta_backup_snap
-sleep 2
-sudo find $ruta_backup_snap -type f -exec chmod 777 {} \;
 
 print_title "04/05 - Respaldando Configuraciones De Zsh"
 

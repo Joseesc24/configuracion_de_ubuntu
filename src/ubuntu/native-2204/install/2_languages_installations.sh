@@ -10,9 +10,9 @@ print_title "Iniciando instalaciones"
 sudo $scripts_path/../sidecar/update.sh
 
 quiet_update
-print_title "01/05 - Instalando python 3.12.0"
+print_title "01/05 - Instalando python 3.12.3"
 
-if command -v python3.12 &> /dev/null; then
+if command -v python3.12.0 &> /dev/null; then
 	print_text "python3.12 ya está instalado, no hace falta hacer más cambios"
 else
 	print_text "python3.12 no está instalado, instalandolo"
@@ -21,9 +21,9 @@ else
 	cd python
 	sudo apt install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget
 	quiet_update
-	wget https://www.python.org/ftp/python/3.12.0/Python-3.12.0.tar.xz
-	tar -xvf Python-3.12.0.tar.xz
-	cd Python-3.12.0
+	wget https://www.python.org/ftp/python/3.12.3/Python-3.12.3.tar.xz
+	tar -xvf Python-3.12.3.tar.xz
+	cd Python-3.12.3
 	sudo ./configure --enable-optimizations
 	sudo make altinstall
 	cd ..
@@ -39,7 +39,7 @@ if command -v poetry &> /dev/null; then
 else
 	print_text "poetry no está instalado, instalandolo"
 	quiet_update
-	curl -sSL https://install.python-poetry.org | python3 -
+	curl -sSL https://install.python-poetry.org | python3.12 -
 fi
 
 quiet_update
@@ -56,7 +56,7 @@ else
 fi
 
 quiet_update
-print_title "04/05 - Instalando nodejs 20.8.0"
+print_title "04/05 - Instalando nodejs 22.2.0"
 
 if command -v node &> /dev/null; then
 	print_text "nodejs ya está instalado, no hace falta hacer más cambios"
@@ -65,15 +65,15 @@ else
 	quiet_update
 	mkdir node
 	cd node
-	wget https://nodejs.org/dist/v20.8.0/node-v20.8.0-linux-x64.tar.xz
-	tar -xvf node-v20.8.0-linux-x64.tar.xz
-	sudo cp -r node-v20.8.0-linux-x64/{bin,include,lib,share} /usr/
+	wget https://nodejs.org/dist/v22.2.0/node-v22.2.0-linux-x64.tar.xz
+	tar -xvf node-v22.2.0-linux-x64.tar.xz
+	sudo cp -r node-v22.2.0-linux-x64/{bin,include,lib,share} /usr/
 	cd ..
 	rm -r node
 fi
 
 quiet_update
-print_title "05/05 - Instalando go 1.21.1"
+print_title "05/05 - Instalando go 1.22.3"
 
 if command -v go &> /dev/null; then
 	print_text "go ya está instalado, no hace falta hacer más cambios"
@@ -82,9 +82,9 @@ else
 	quiet_update
 	mkdir golang
 	cd golang
-	wget https://go.dev/dl/go1.21.1.linux-amd64.tar.gz
+	wget https://go.dev/dl/go1.22.3.linux-amd64.tar.gz
 	rm -rf /usr/local/go
-	sudo tar -C /usr/local -xzf go1.21.1.linux-amd64.tar.gz
+	sudo tar -C /usr/local -xzf go1.22.3.linux-amd64.tar.gz
 	cd ..
 	rm -r golang
 fi
