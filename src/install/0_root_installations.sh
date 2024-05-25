@@ -14,6 +14,7 @@ print_title "01/07 - Installing Snap Programs"
 sudo snap install ngrok
 sudo snap install postman
 sudo snap install spotify
+sudo snap install kustomize
 sudo snap install redisinsight
 sudo snap install code --classic
 sudo snap install beekeeper-studio
