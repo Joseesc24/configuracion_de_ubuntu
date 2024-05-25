@@ -5,11 +5,11 @@ source $scripts_path/../sidecar/commons.sh
 
 remove_and_ask_password
 
-print_title "Iniciando instalaciones"
+print_title "Starting Installations"
 
 sudo $scripts_path/../sidecar/update.sh
 
-print_title "01/07 - Instalando programas de snap"
+print_title "01/07 - Installing Snap Programs"
 
 sudo snap install ngrok
 sudo snap install postman
@@ -20,12 +20,12 @@ sudo snap install beekeeper-studio
 sudo snap install kubectl --classic
 
 quiet_update
-print_title "02/07 - Desinstalando programas de snap"
+print_title "02/07 - Uninstalling Snap Programs"
 
 sudo snap remove firefox
 
 quiet_update
-print_title "03/07 - Instalando programas de repositorios por defecto"
+print_title "03/07 - Installing Default Repository Programs"
 
 default_instalations=(
 	"software-properties-common"
@@ -45,23 +45,23 @@ default_instalations=(
 )
 
 for the_package in "${default_instalations[@]}"; do
-	print_text "Instalando $the_package"
-	print_text "Validando instalación del paquete $the_package"
+	print_text "installing $the_package"
+	print_text "validating installation of package $the_package"
 	if dpkg -s $the_package &> /dev/null; then
-		print_text "El paquete $the_package está instalado, no hace falta hacer más cambios"
+		print_text "package $the_package is already installed no further changes needed"
 	else
-		print_text "El paquete $the_package no está instalado, instalandolo"
+		print_text "package $the_package is not installed installing it"
 		sudo apt-get install -y $the_package
 	fi
 done
 
 quiet_update
-print_title "04/07 - Instalando chrome"
+print_title "04/07 - Installing Chrome"
 
 if command -v google-chrome-stable &> /dev/null; then
-	print_text "chrome ya está instalado, no hace falta hacer más cambios"
+	print_text "google chrome is already installed no further changes needed"
 else
-	print_text "chrome no está instalado, instalandolo"
+	print_text "google chrome is not installed installing it"
 	quiet_update
 	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 	sudo apt install -y ./google-chrome-stable_current_amd64.deb
@@ -69,12 +69,12 @@ else
 fi
 
 quiet_update
-print_title "05/07 - Instalando MongoDB-compass"
+print_title "05/07 - Installing Mongodb-Compass"
 
 if command -v mongodb-compass &> /dev/null; then
-	print_text "compass ya está instalado, no hace falta hacer más cambios"
+	print_text "compass is already installed no further changes needed"
 else
-	print_text "compass no está instalado, instalandolo"
+	print_text "compass is not installed installing it"
 	quiet_update
 	wget https://downloads.mongodb.com/compass/mongodb-compass_1.43.0_amd64.deb
 	sudo dpkg -i mongodb-compass_1.43.0_amd64.deb
@@ -82,23 +82,23 @@ else
 fi
 
 quiet_update
-print_title "06/07 - Instalando K3S"
+print_title "06/07 - Installing K3s"
 
 if command -v k3S &> /dev/null; then
-	print_text "K3S ya está instalado, no hace falta hacer más cambios"
+	print_text "k3s is already installed no further changes needed"
 else
-	print_text "K3S no está instalado, instalandolo"
+	print_text "k3s is not installed installing it"
 	quiet_update
 	curl -sfL https://get.k3s.io | sh -
 fi
 
 quiet_update
-print_title "07/07 - Instalando K6"
+print_title "07/07 - Installing K6"
 
 if command -v K6 &> /dev/null; then
-	print_text "K6 ya está instalado, no hace falta hacer más cambios"
+	print_text "k6 is already installed no further changes needed"
 else
-	print_text "K6 no está instalado, instalandolo"
+	print_text "k6 is not installed installing it"
 	sudo gpg -k
 	sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
 	echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
@@ -107,4 +107,4 @@ else
 fi
 
 quiet_update
-print_title "Instalaciones finalizadas"
+print_title "Installations Completed"

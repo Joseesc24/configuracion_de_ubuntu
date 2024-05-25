@@ -12,10 +12,10 @@ remove_and_ask_password
 
 create_directory_if_not_exists() {
 	if test -d $1; then
-		print_text "Directory $1 already exists"
+		print_text "directory $1 already exists"
 	else
-		print_text "Directory $1 does not exist"
-		print_text "Creating directory $1"
+		print_text "directory $1 does not exist"
+		print_text "creating directory $1"
 		mkdir -p $1
 	fi
 }
@@ -25,15 +25,15 @@ copy_checking_source_and_destination() {
 	destination_path=$2
 	create_directory_if_not_exists $destination_path
 	if test -f $source_path; then
-		print_text "Source path $source_path is a file"
-		print_text "Copying file from $source_path to $destination_path"
+		print_text "source path $source_path is a file"
+		print_text "copying file from $source_path to $destination_path"
 		cp -r $source_path $destination_path
 	elif test -d $source_path; then
-		print_text "Source path $source_path is a directory"
-		print_text "Copying contents from $source_path to $destination_path"
+		print_text "source path $source_path is a directory"
+		print_text "copying contents from $source_path to $destination_path"
 		cp -r $source_path/* $destination_path
 	else
-		print_text "Source path $source_path does not exist"
+		print_text "source path $source_path does not exist"
 	fi
 }
 
@@ -53,21 +53,21 @@ source_zsh_path_2=$home/.zshrc
 copy_checking_source_and_destination $source_zsh_path_1 $backup_zsh_path
 copy_checking_source_and_destination $source_zsh_path_2 $backup_zsh_path
 
-print_title "03/03 - Compressing Backup Into a Tar File"
+print_title "03/03 - Compressing Backup Into A Tar File"
 
 create_directory_if_not_exists $tar_path
 cd $tar_path
 
 if test -f backup.tar.gz; then
-	print_text "Deleting previous backup"
+	print_text "deleting previous backup"
 	rm -r backup.tar.gz
 fi
 
-print_text "Creating new backup"
+print_text "creating new backup"
 
 tar -zcvf backup.tar.gz $backup_path
 rm -r $backup_path
 
-print_text "Backup created"
+print_text "backup created"
 
 print_title "Custom Configurations Backup Finished"

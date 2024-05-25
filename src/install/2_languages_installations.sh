@@ -5,17 +5,17 @@ source $scripts_path/../sidecar/commons.sh
 
 remove_and_ask_password
 
-print_title "Iniciando instalaciones"
+print_title "Starting Installations"
 
 sudo $scripts_path/../sidecar/update.sh
 
 quiet_update
-print_title "01/05 - Instalando python 3.12.3"
+print_title "01/05 - Installing Python 3.12.3"
 
 if command -v python3.12.0 &> /dev/null; then
-	print_text "python3.12 ya está instalado, no hace falta hacer más cambios"
+	print_text "python3.12 is already installed, no further changes needed"
 else
-	print_text "python3.12 no está instalado, instalandolo"
+	print_text "python3.12 is not installed, installing"
 	quiet_update
 	mkdir python
 	cd python
@@ -32,23 +32,23 @@ else
 fi
 
 quiet_update
-print_title "02/05 - Instalando poetry latest"
+print_title "02/05 - Installing Poetry Latest"
 
 if command -v poetry &> /dev/null; then
-	print_text "poetry ya está instalado, no hace falta hacer más cambios"
+	print_text "poetry is already installed, no further changes needed"
 else
-	print_text "poetry no está instalado, instalandolo"
+	print_text "poetry is not installed, installing"
 	quiet_update
 	curl -sSL https://install.python-poetry.org | python3.12 -
 fi
 
 quiet_update
-print_title "03/05 - Instalando rust latest"
+print_title "03/05 - Installing Rust Latest"
 
 if command -v rustup &> /dev/null; then
-	print_text "rust ya está instalado, no hace falta hacer más cambios"
+	print_text "rust is already installed, no further changes needed"
 else
-	print_text "rust no está instalado, instalandolo"
+	print_text "rust is not installed, installing"
 	quiet_update
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rustup.sh
 	sh rustup.sh -y
@@ -56,12 +56,12 @@ else
 fi
 
 quiet_update
-print_title "04/05 - Instalando nodejs 22.2.0"
+print_title "04/05 - Installing Nodejs 22.2.0"
 
 if command -v node &> /dev/null; then
-	print_text "nodejs ya está instalado, no hace falta hacer más cambios"
+	print_text "nodejs is already installed, no further changes needed"
 else
-	print_text "nodejs no está instalado, instalandolo"
+	print_text "nodejs is not installed, installing"
 	quiet_update
 	mkdir node
 	cd node
@@ -73,12 +73,12 @@ else
 fi
 
 quiet_update
-print_title "05/05 - Instalando go 1.22.3"
+print_title "05/05 - Installing Go 1.22.3"
 
 if command -v go &> /dev/null; then
-	print_text "go ya está instalado, no hace falta hacer más cambios"
+	print_text "go is already installed, no further changes needed"
 else
-	print_text "go no está instalado, instalandolo"
+	print_text "go is not installed, installing"
 	quiet_update
 	mkdir golang
 	cd golang
@@ -89,4 +89,4 @@ else
 	rm -r golang
 fi
 
-print_title "Instalaciones finalizadas"
+print_title "Installations Completed"
