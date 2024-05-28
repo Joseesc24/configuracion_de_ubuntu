@@ -16,6 +16,7 @@ sudo snap install postman
 sudo snap install spotify
 sudo snap install kustomize
 sudo snap install redisinsight
+sudo snap install helm --classic
 sudo snap install code --classic
 sudo snap install beekeeper-studio
 sudo snap install kubectl --classic
