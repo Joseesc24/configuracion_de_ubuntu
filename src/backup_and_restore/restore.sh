@@ -95,9 +95,9 @@ if getent group microk8s | grep -q "\b$user\b"; then
 	print_text "the user $user already belongs to the microk8s group no further changes needed"
 else
 	print_text "the user $user does not belong to the microk8s group yet adding $user to the microk8s group"
+	create_directory_if_not_exists ~/.kube
+	sudo microk8s config > ~/.kube/config
 	sudo adduser $user microk8s
-	mkdir -p ~/.kube
-	chmod 0700 ~/.kube
 fi
 
 print_title "05/05 - Removing Backup Directory"

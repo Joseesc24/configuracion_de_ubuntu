@@ -20,6 +20,7 @@ snap install microk8s --classic
 sudo snap install helm --classic
 sudo snap install code --classic
 sudo snap install beekeeper-studio
+sudo snap install kubectl --classic
 
 quiet_update
 print_title "02/06 - Uninstalling Snap Programs"
