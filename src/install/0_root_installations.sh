@@ -9,25 +9,25 @@ print_title "Starting Installations"
 
 sudo $scripts_path/../sidecar/update.sh
 
-print_title "01/07 - Installing Snap Programs"
+print_title "01/06 - Installing Snap Programs"
 
 sudo snap install ngrok
 sudo snap install postman
 sudo snap install spotify
 sudo snap install kustomize
 sudo snap install redisinsight
+snap install microk8s --classic
 sudo snap install helm --classic
 sudo snap install code --classic
 sudo snap install beekeeper-studio
-sudo snap install kubectl --classic
 
 quiet_update
-print_title "02/07 - Uninstalling Snap Programs"
+print_title "02/06 - Uninstalling Snap Programs"
 
 sudo snap remove firefox
 
 quiet_update
-print_title "03/07 - Installing Default Repository Programs"
+print_title "03/06 - Installing Default Repository Programs"
 
 default_instalations=(
 	"software-properties-common"
@@ -58,7 +58,7 @@ for the_package in "${default_instalations[@]}"; do
 done
 
 quiet_update
-print_title "04/07 - Installing Chrome"
+print_title "04/06 - Installing Chrome"
 
 if command -v google-chrome-stable &> /dev/null; then
 	print_text "google chrome is already installed no further changes needed"
@@ -71,7 +71,7 @@ else
 fi
 
 quiet_update
-print_title "05/07 - Installing Mongodb-Compass"
+print_title "05/06 - Installing Mongodb-Compass"
 
 if command -v mongodb-compass &> /dev/null; then
 	print_text "compass is already installed no further changes needed"
@@ -84,18 +84,7 @@ else
 fi
 
 quiet_update
-print_title "06/07 - Installing K3s"
-
-if command -v k3S &> /dev/null; then
-	print_text "k3s is already installed no further changes needed"
-else
-	print_text "k3s is not installed installing it"
-	quiet_update
-	curl -sfL https://get.k3s.io | sh -
-fi
-
-quiet_update
-print_title "07/07 - Installing K6"
+print_title "06/06 - Installing K6"
 
 if command -v K6 &> /dev/null; then
 	print_text "k6 is already installed no further changes needed"

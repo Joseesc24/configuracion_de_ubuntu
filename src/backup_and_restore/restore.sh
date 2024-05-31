@@ -82,6 +82,24 @@ else
 	sudo adduser $user docker
 fi
 
+print_title "04/05 - Restoring Microk8s Configurations"
+
+if grep -q microk8s /etc/group; then
+	print_text "the microk8s group already exists no further changes needed"
+else
+	print_text "the microk8s group does not exist creating microk8s group"
+	sudo addgroup --system microk8s
+fi
+
+if getent group microk8s | grep -q "\b$user\b"; then
+	print_text "the user $user already belongs to the microk8s group no further changes needed"
+else
+	print_text "the user $user does not belong to the microk8s group yet adding $user to the microk8s group"
+	sudo adduser $user microk8s
+	mkdir -p ~/.kube
+	chmod 0700 ~/.kube
+fi
+
 print_title "05/05 - Removing Backup Directory"
 
 rm -r backup
