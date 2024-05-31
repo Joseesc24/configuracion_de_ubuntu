@@ -16,11 +16,11 @@ sudo snap install postman
 sudo snap install spotify
 sudo snap install kustomize
 sudo snap install redisinsight
-snap install microk8s --classic
 sudo snap install helm --classic
 sudo snap install code --classic
 sudo snap install beekeeper-studio
 sudo snap install kubectl --classic
+sudo snap install microk8s --classic
 
 quiet_update
 print_title "02/06 - Uninstalling Snap Programs"
