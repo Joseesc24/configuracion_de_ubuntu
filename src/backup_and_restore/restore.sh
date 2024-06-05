@@ -2,7 +2,7 @@
 
 scripts_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
 source $scripts_path/../sidecar/commons.sh
-backup_path=$scripts_path/../backup
+backup_path=$scripts_path/../snapshot/backup
 tar_path=$scripts_path/../snapshot
 
 home=$HOME
