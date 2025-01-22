@@ -100,4 +100,19 @@ else
 	curl -fsSL https://bun.sh/install | bash -s "bun-v1.1.16"
 fi
 
+quiet_update
+print_title "03/06 - Installing Java 21"
+
+if command -v java &> /dev/null; then
+	print_text "java is already installed, no further changes needed"
+else
+	print_text "java is not installed, installing"
+	quiet_update
+	mkdir java
+	cd java
+	wget https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb
+	cd ..
+	rm -r java
+fi
+
 print_title "Installations Completed"
