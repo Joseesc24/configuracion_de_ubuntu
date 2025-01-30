@@ -10,7 +10,7 @@ print_title "Starting Installations"
 sudo $scripts_path/../sidecar/update.sh
 
 quiet_update
-print_title "01/06 - Installing Python 3.13.1 Latest"
+print_title "01/08 - Installing Python 3.13.1 Latest"
 
 if command -v python3.13.0 &> /dev/null; then
 	print_text "python3.13 is already installed, no further changes needed"
@@ -32,7 +32,7 @@ else
 fi
 
 quiet_update
-print_title "02/06 - Installing Poetry Latest"
+print_title "02/08 - Installing Poetry Latest"
 
 if command -v poetry &> /dev/null; then
 	print_text "poetry is already installed, no further changes needed"
@@ -43,7 +43,7 @@ else
 fi
 
 quiet_update
-print_title "03/06 - Installing Rust Latest"
+print_title "03/08 - Installing Rust Latest"
 
 if command -v rustup &> /dev/null; then
 	print_text "rust is already installed, no further changes needed"
@@ -56,7 +56,7 @@ else
 fi
 
 quiet_update
-print_title "04/06 - Installing Nodejs 22.13.1 LTS"
+print_title "04/08 - Installing Nodejs 22.13.1 LTS"
 
 if command -v node &> /dev/null; then
 	print_text "nodejs is already installed, no further changes needed"
@@ -73,7 +73,7 @@ else
 fi
 
 quiet_update
-print_title "05/06 - Installing Go 1.23.5 Stable"
+print_title "05/08 - Installing Go 1.23.5 Stable"
 
 if command -v go &> /dev/null; then
 	print_text "go is already installed, no further changes needed"
@@ -90,7 +90,7 @@ else
 fi
 
 quiet_update
-print_title "03/06 - Installing Bun 1.2.0 Latest"
+print_title "03/08 - Installing Bun 1.2.0 Latest"
 
 if command -v bun &> /dev/null; then
 	print_text "bun is already installed, no further changes needed"
@@ -101,7 +101,7 @@ else
 fi
 
 quiet_update
-print_title "03/06 - Installing Java 21 LTS"
+print_title "03/08 - Installing Java 21 LTS"
 
 if command -v java &> /dev/null; then
 	print_text "java is already installed, no further changes needed"
@@ -113,6 +113,17 @@ else
 	wget https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb
 	cd ..
 	rm -r java
+fi
+
+quiet_update
+print_title "03/08 - Installing Ollama"
+
+if command -v ollama &> /dev/null; then
+	print_text "ollama is already installed, no further changes needed"
+else
+	print_text "ollama is not installed, installing"
+	quiet_update
+	sudo curl -fsSL https://ollama.com/install.sh | sh
 fi
 
 print_title "Installations Completed"
