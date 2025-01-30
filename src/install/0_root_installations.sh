@@ -32,6 +32,7 @@ print_title "03/06 - Installing Default Repository Programs"
 
 default_instalations=(
 	"software-properties-common"
+	"python-is-python3"
 	"usb-creator-gtk"
 	"net-tools"
 	"timeshift"
