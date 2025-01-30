@@ -32,7 +32,7 @@ else
 fi
 
 quiet_update
-print_title "02/08 - Installing Poetry Latest"
+print_title "02/08 - Installing Poetry And Uv Latest"
 
 if command -v poetry &> /dev/null; then
 	print_text "poetry is already installed, no further changes needed"
@@ -40,6 +40,14 @@ else
 	print_text "poetry is not installed, installing"
 	quiet_update
 	curl -sSL https://install.python-poetry.org | python3.13 -
+fi
+
+if command -v uv &> /dev/null; then
+	print_text "uv is already installed, no further changes needed"
+else
+	print_text "uv is not installed, installing"
+	quiet_update
+	curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
 
 quiet_update
