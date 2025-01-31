@@ -80,9 +80,9 @@ if command -v mongodb-compass &> /dev/null; then
 else
 	print_text "compass is not installed installing it"
 	quiet_update
-	wget https://downloads.mongodb.com/compass/mongodb-compass_1.43.0_amd64.deb
-	sudo dpkg -i mongodb-compass_1.43.0_amd64.deb
-	rm -r mongodb-compass_1.43.0_amd64.deb
+	wget https://downloads.mongodb.com/compass/mongodb-compass_1.45.2_amd64.deb
+	sudo dpkg -i mongodb-compass_1.45.2_amd64.deb
+	rm -r mongodb-compass_1.45.2_amd64.deb
 fi
 
 quiet_update
